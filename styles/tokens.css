@@ -1,0 +1,83 @@
+/* ============================================================
+   GAIA — Design tokens
+   Princípio: cada cor, fonte ou espaçamento usado na plataforma
+   nasce aqui. Mudou aqui, muda em todo lugar.
+   ============================================================ */
+
+:root {
+  /* Cores institucionais (Muvuka) */
+  --gaia-green-900: #0F3D2E;   /* mata profunda */
+  --gaia-green-700: #1F6F4A;   /* primário */
+  --gaia-green-500: #2F9362;   /* primário claro */
+  --gaia-green-300: #8FB339;   /* acento (cerrado) */
+  --gaia-green-100: #E8F1E8;   /* fundo claro */
+
+  --gaia-water-700: #1A5F8A;   /* água — usado em hidrografia/nascentes */
+  --gaia-water-500: #2F8FBE;
+  --gaia-water-100: #E4F1F8;
+
+  --gaia-earth-700: #8B5A2B;   /* solo / terras */
+  --gaia-earth-500: #C68B47;
+  --gaia-earth-100: #F6EBDB;
+
+  --gaia-warn-500:  #D97706;   /* alertas (desmatamento) */
+  --gaia-danger-500: #B91C1C;  /* dado restrito / risco */
+  --gaia-success-500: #059669;
+
+  --gaia-ink-900: #111827;
+  --gaia-ink-700: #1F2937;
+  --gaia-ink-500: #4B5563;
+  --gaia-ink-300: #9CA3AF;
+  --gaia-ink-100: #E5E7EB;
+  --gaia-bg:      #FAFAF7;
+  --gaia-card:    #FFFFFF;
+  --gaia-border:  #E5E7EB;
+
+  /* Tipografia */
+  --gaia-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --gaia-font-mono: 'JetBrains Mono', 'Consolas', monospace;
+
+  --gaia-text-xs:   12px;
+  --gaia-text-sm:   14px;
+  --gaia-text-base: 16px;
+  --gaia-text-lg:   18px;
+  --gaia-text-xl:   22px;
+  --gaia-text-2xl:  28px;
+  --gaia-text-3xl:  36px;
+  --gaia-text-4xl:  48px;
+
+  --gaia-line-tight:  1.2;
+  --gaia-line-normal: 1.5;
+  --gaia-line-loose:  1.7;
+
+  /* Espaçamentos */
+  --gaia-space-1: 4px;
+  --gaia-space-2: 8px;
+  --gaia-space-3: 12px;
+  --gaia-space-4: 16px;
+  --gaia-space-6: 24px;
+  --gaia-space-8: 32px;
+  --gaia-space-12: 48px;
+  --gaia-space-16: 64px;
+
+  /* Bordas e sombras */
+  --gaia-radius-sm: 4px;
+  --gaia-radius-md: 8px;
+  --gaia-radius-lg: 12px;
+  --gaia-radius-pill: 999px;
+
+  --gaia-shadow-sm: 0 1px 2px rgba(15, 61, 46, 0.04);
+  --gaia-shadow-md: 0 4px 12px rgba(15, 61, 46, 0.08);
+  --gaia-shadow-lg: 0 12px 32px rgba(15, 61, 46, 0.12);
+
+  /* Tier de sensibilidade — referência visual da política de dados */
+  --gaia-tier-public:    var(--gaia-success-500);
+  --gaia-tier-aggregated: var(--gaia-warn-500);
+  --gaia-tier-restricted: var(--gaia-danger-500);
+
+  /* Z-index */
+  --gaia-z-base:    1;
+  --gaia-z-overlay: 10;
+  --gaia-z-modal:   100;
+  --gaia-z-toast:   1000;
+}

@@ -1,0 +1,187 @@
+/* ============================================================
+   GAIA — Componentes reutilizáveis
+   Cada componente é uma classe única, sem dependências.
+   ============================================================ */
+
+/* ---- Container ---- */
+.gaia-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--gaia-space-6);
+}
+
+/* ---- Header institucional ---- */
+.gaia-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--gaia-space-4) var(--gaia-space-6);
+  background: var(--gaia-card);
+  border-bottom: 1px solid var(--gaia-border);
+  position: sticky; top: 0; z-index: var(--gaia-z-overlay);
+}
+.gaia-header__brand {
+  display: flex; align-items: center; gap: var(--gaia-space-3);
+  font-weight: 700; font-size: var(--gaia-text-xl);
+  color: var(--gaia-green-900);
+}
+.gaia-header__brand-mark {
+  width: 36px; height: 36px;
+  background: var(--gaia-green-700);
+  border-radius: var(--gaia-radius-pill);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 700; font-size: var(--gaia-text-lg);
+}
+.gaia-header__nav {
+  display: flex; gap: var(--gaia-space-6);
+  list-style: none; padding: 0; margin: 0;
+}
+.gaia-header__nav a {
+  color: var(--gaia-ink-700);
+  font-weight: 500;
+  font-size: var(--gaia-text-sm);
+}
+.gaia-header__nav a:hover { color: var(--gaia-green-700); }
+
+/* ---- Botões ---- */
+.gaia-btn {
+  display: inline-flex; align-items: center; gap: var(--gaia-space-2);
+  padding: var(--gaia-space-3) var(--gaia-space-6);
+  font-size: var(--gaia-text-sm);
+  font-weight: 600;
+  border-radius: var(--gaia-radius-md);
+  border: 1px solid transparent;
+  transition: all 150ms ease;
+}
+.gaia-btn--primary {
+  background: var(--gaia-green-700);
+  color: white;
+}
+.gaia-btn--primary:hover { background: var(--gaia-green-900); }
+.gaia-btn--secondary {
+  background: var(--gaia-card);
+  color: var(--gaia-ink-700);
+  border-color: var(--gaia-border);
+}
+.gaia-btn--secondary:hover { border-color: var(--gaia-green-500); color: var(--gaia-green-700); }
+
+/* ---- Card ---- */
+.gaia-card {
+  background: var(--gaia-card);
+  border: 1px solid var(--gaia-border);
+  border-radius: var(--gaia-radius-lg);
+  padding: var(--gaia-space-6);
+  box-shadow: var(--gaia-shadow-sm);
+}
+
+/* ---- Hero ---- */
+.gaia-hero {
+  padding: var(--gaia-space-16) 0 var(--gaia-space-12);
+  background: linear-gradient(135deg, var(--gaia-green-100) 0%, var(--gaia-water-100) 100%);
+  border-bottom: 1px solid var(--gaia-border);
+}
+.gaia-hero__title {
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--gaia-green-900);
+  margin-bottom: var(--gaia-space-6);
+}
+.gaia-hero__title em { color: var(--gaia-green-700); font-style: normal; }
+.gaia-hero__lead {
+  font-size: var(--gaia-text-xl);
+  line-height: var(--gaia-line-loose);
+  color: var(--gaia-ink-700);
+  max-width: 720px;
+}
+.gaia-hero__cta {
+  display: flex; gap: var(--gaia-space-4); margin-top: var(--gaia-space-8); flex-wrap: wrap;
+}
+
+/* ---- Grid de features ---- */
+.gaia-grid {
+  display: grid;
+  gap: var(--gaia-space-6);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.gaia-feature__icon {
+  width: 48px; height: 48px;
+  border-radius: var(--gaia-radius-md);
+  background: var(--gaia-green-100);
+  color: var(--gaia-green-700);
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--gaia-text-2xl);
+  margin-bottom: var(--gaia-space-4);
+}
+.gaia-feature__title {
+  font-size: var(--gaia-text-lg);
+  font-weight: 600;
+  margin-bottom: var(--gaia-space-2);
+}
+.gaia-feature__desc {
+  font-size: var(--gaia-text-sm);
+  color: var(--gaia-ink-500);
+}
+
+/* ---- Tier badge (política de dados sensíveis) ---- */
+.gaia-tier {
+  display: inline-flex; align-items: center; gap: var(--gaia-space-2);
+  padding: var(--gaia-space-1) var(--gaia-space-3);
+  border-radius: var(--gaia-radius-pill);
+  font-size: var(--gaia-text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.gaia-tier--public {
+  background: rgba(5, 150, 105, 0.1);
+  color: var(--gaia-success-500);
+}
+.gaia-tier--aggregated {
+  background: rgba(217, 119, 6, 0.1);
+  color: var(--gaia-warn-500);
+}
+.gaia-tier--restricted {
+  background: rgba(185, 28, 28, 0.1);
+  color: var(--gaia-danger-500);
+}
+.gaia-tier__dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: currentColor;
+}
+
+/* ---- Footer ---- */
+.gaia-footer {
+  background: var(--gaia-green-900);
+  color: var(--gaia-green-100);
+  padding: var(--gaia-space-12) 0 var(--gaia-space-6);
+}
+.gaia-footer__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--gaia-space-8);
+  margin-bottom: var(--gaia-space-8);
+}
+.gaia-footer h4 {
+  color: white;
+  font-size: var(--gaia-text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--gaia-space-4);
+}
+.gaia-footer ul { list-style: none; padding: 0; margin: 0; }
+.gaia-footer ul li { margin-bottom: var(--gaia-space-2); }
+.gaia-footer a { color: var(--gaia-green-100); font-size: var(--gaia-text-sm); }
+.gaia-footer a:hover { color: white; }
+.gaia-footer__legal {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: var(--gaia-space-6);
+  font-size: var(--gaia-text-xs);
+  color: rgba(232, 241, 232, 0.6);
+}
+@media (max-width: 720px) {
+  .gaia-footer__grid { grid-template-columns: 1fr 1fr; }
+  .gaia-header__nav { display: none; }
+}

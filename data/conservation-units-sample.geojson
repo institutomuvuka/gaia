@@ -1,0 +1,161 @@
+{
+  "type": "FeatureCollection",
+  "name": "uc-sample-bahia",
+  "metadata": {
+    "title": "Amostra de Unidades de Conservação — Bahia (Costa do Cacau)",
+    "purpose": "Amostra ilustrativa para validar o pipeline ponta a ponta. Geometrias APROXIMADAS — substituir pelos shapefiles oficiais do CNUC na próxima iteração.",
+    "source_official": "https://dados.mma.gov.br/dataset/unidades-de-conservacao",
+    "license": "CC BY 4.0 (uso da amostra) / dados oficiais conforme licença do CNUC",
+    "createdAt": "2026-04-30",
+    "ingestionStatus": "sample"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "uc-conduru",
+        "name": "Parque Estadual Serra do Conduru",
+        "category": "Parque Estadual",
+        "manager": "INEMA / Bahia",
+        "biome": "Mata Atlântica",
+        "decreeYear": 1997,
+        "areaHa": 9275,
+        "uf": "BA",
+        "tier": "public",
+        "sourceUrl": "https://www.inema.ba.gov.br/"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-39.18, -14.42], [-39.05, -14.42], [-39.05, -14.32], [-39.18, -14.32], [-39.18, -14.42]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "uc-una-rebio",
+        "name": "Reserva Biológica de Una",
+        "category": "Reserva Biológica (federal)",
+        "manager": "ICMBio",
+        "biome": "Mata Atlântica",
+        "decreeYear": 1980,
+        "areaHa": 23262,
+        "uf": "BA",
+        "tier": "public",
+        "sourceUrl": "https://www.gov.br/icmbio/"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-39.10, -15.27], [-38.95, -15.27], [-38.95, -15.10], [-39.10, -15.10], [-39.10, -15.27]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "uc-una-revis",
+        "name": "Refúgio de Vida Silvestre de Una",
+        "category": "Refúgio de Vida Silvestre (federal)",
+        "manager": "ICMBio",
+        "biome": "Mata Atlântica",
+        "decreeYear": 2007,
+        "areaHa": 23404,
+        "uf": "BA",
+        "tier": "public",
+        "sourceUrl": "https://www.gov.br/icmbio/"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-39.18, -15.30], [-39.04, -15.30], [-39.04, -15.20], [-39.18, -15.20], [-39.18, -15.30]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "uc-apa-itacare",
+        "name": "APA Costa de Itacaré-Serra Grande",
+        "category": "Área de Proteção Ambiental (estadual)",
+        "manager": "INEMA / Bahia",
+        "biome": "Mata Atlântica",
+        "decreeYear": 1993,
+        "areaHa": 14925,
+        "uf": "BA",
+        "tier": "public",
+        "sourceUrl": "https://www.inema.ba.gov.br/"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-39.05, -14.45], [-38.95, -14.45], [-38.95, -14.27], [-39.05, -14.27], [-39.05, -14.45]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "uc-pne-descobrimento",
+        "name": "Parque Nacional do Descobrimento",
+        "category": "Parque Nacional",
+        "manager": "ICMBio",
+        "biome": "Mata Atlântica",
+        "decreeYear": 1999,
+        "areaHa": 22678,
+        "uf": "BA",
+        "tier": "public",
+        "sourceUrl": "https://www.gov.br/icmbio/"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-39.40, -16.95], [-39.20, -16.95], [-39.20, -16.75], [-39.40, -16.75], [-39.40, -16.95]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "uc-pne-monte-pascoal",
+        "name": "Parque Nacional Histórico do Monte Pascoal",
+        "category": "Parque Nacional",
+        "manager": "ICMBio",
+        "biome": "Mata Atlântica",
+        "decreeYear": 1961,
+        "areaHa": 22383,
+        "uf": "BA",
+        "tier": "public",
+        "sourceUrl": "https://www.gov.br/icmbio/"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-39.50, -16.92], [-39.36, -16.92], [-39.36, -16.78], [-39.50, -16.78], [-39.50, -16.92]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "uc-pne-chapada",
+        "name": "Parque Nacional da Chapada Diamantina",
+        "category": "Parque Nacional",
+        "manager": "ICMBio",
+        "biome": "Caatinga / Cerrado",
+        "decreeYear": 1985,
+        "areaHa": 152540,
+        "uf": "BA",
+        "tier": "public",
+        "sourceUrl": "https://www.gov.br/icmbio/"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-41.85, -12.95], [-41.30, -12.95], [-41.30, -12.40], [-41.85, -12.40], [-41.85, -12.95]
+        ]]
+      }
+    }
+  ]
+}
