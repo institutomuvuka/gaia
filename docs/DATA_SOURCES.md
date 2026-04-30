@@ -18,5 +18,4 @@ Inventário das fontes oficiais que alimentam GAIA, com status de ingestão. Tod
 | Nascentes | ANA + dados primários | https://www.ana.gov.br/ | Mistura: oficial + colaborativo | ⏳ pendente | Camada **agregada** por padrão. Ver política de dados sensíveis. |
 | Cobertura e uso da terra | MapBiomas | https://mapbiomas.org/colecoes-mapbiomas | GeoTIFF + WMS | ⏳ pendente | API requer cadastro. Avaliar uso de WMS público vs. ingest local. |
 | Alertas de desmatamento | Global Forest Watch | https://www.globalforestwatch.org/ | API | ⏳ pendente | Integração com a API de alertas (GLAD/RADD). |
-| Espécies ameaçadas | IUCN Red List | https://www.iucnredlist.org/ | API | ⏳ pendente | Uso requer cadastro de pesquisa. |
-| Espécies ameaçadas (BR) | ICMBio | https://www.icmbio.gov.br/portal/faun
+| Espécies ameaçadas | GBIF + IUCN | https://www.gbif.org/ | API REST → GeoJSON | ✅ oficial (parcial) | 25 espécies-bandeira; polígonos via concave hull de ocorrências GBIF, categoria IUCN preser

@@ -198,14 +198,15 @@
         <tr>
           <td><strong>Espécies ameaçadas</strong></td>
           <td>
-            <a href="https://www.iucnredlist.org/" target="_blank" rel="noopener">IUCN Red List</a>
+            <a href="https://www.gbif.org/" target="_blank" rel="noopener">GBIF</a> (ocorrências georeferenciadas)<br>
+            <span style="color: var(--gaia-ink-500); font-size: var(--gaia-text-xs);">Categoria IUCN preservada por ocorrência</span>
           </td>
           <td>
-            <a href="https://www.gov.br/icmbio/pt-br/assuntos/biodiversidade/fauna-brasileira/lista-de-especies" target="_blank" rel="noopener">ICMBio — Lista oficial nacional</a><br>
-            <a href="https://www.gbif.org/" target="_blank" rel="noopener">GBIF</a> (ocorrências)
+            <a href="https://www.iucnredlist.org/" target="_blank" rel="noopener">IUCN Red List</a> (range maps oficiais — registro pendente)<br>
+            <a href="https://salve.icmbio.gov.br/" target="_blank" rel="noopener">SALVE/ICMBio</a> (Cloudflare bloqueia bots)
           </td>
-          <td>—</td>
-          <td><span class="fontes-status fontes-status--planned">Sprint 8</span></td>
+          <td class="num">25 espécies-bandeira</td>
+          <td><span class="fontes-status fontes-status--official">Oficial</span></td>
         </tr>
         <tr>
           <td><strong>Pesquisa acadêmica</strong></td>
@@ -277,4 +278,4 @@ python3 scripts/ingest_funai_tis.py</code></pre>
 
     <p>Quando MMA ou FUNAI publicarem novas versões dos datasets, basta rodar o script novamente. As camadas no mapa atualizam automaticamente após o próximo deploy.</p>
 
-    <p style="margin-top: var(--gaia-space-12); padding-top: var(--gaia-space-6); border-top: 1px solid var(--gaia-border); color: var(--gaia-ink-500); font-size: var(--gaia-text-sm);">
+    <p style

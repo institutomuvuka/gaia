@@ -83,12 +83,18 @@ export const LAYERS = Object.freeze({
     id: 'threatened-species',
     label: 'Espécies Ameaçadas',
     icon: '🦋',
-    description: 'Ocorrências de espécies ameaçadas de fauna e flora (IUCN + ICMBio).',
-    source: { origin: 'IUCN Red List + ICMBio', url: 'https://www.iucnredlist.org/', ingestionStatus: 'pending' },
+    description: '25 espécies-bandeira (mamíferos, aves, répteis, anfíbios e flora). Polígonos coloridos pela categoria IUCN (CR/EN/VU/NT/LC).',
+    source: {
+      origin: 'GBIF + IUCN Red List category',
+      url: 'https://www.gbif.org/',
+      reference: 'Polígonos via concave hull de ocorrências GBIF; categoria IUCN preservada por ocorrência.',
+      lastFetched: '2026-04-30',
+      ingestionStatus: 'official',
+    },
     sensitivity: 'aggregated',
     color: '#D97706',
     visibleByDefault: false,
-    module: null,
+    module: './modules/layers/threatened-species.js',
   },
   'mapbiomas-cover': {
     id: 'mapbiomas-cover',
@@ -114,14 +120,4 @@ export const SENSITIVITY = Object.freeze({
   aggregated: {
     label: 'Agregado',
     description: 'Geometria agregada a célula de 1 km (H3). Atributos sem identificação de custodiante.',
-    color: 'var(--gaia-tier-aggregated)',
-  },
-  restricted: {
-    label: 'Restrito',
-    description: 'Acesso somente a custodiantes verificados e a parceiros formais.',
-    color: 'var(--gaia-tier-restricted)',
-  },
-});
-
-// Configuração do mapa base.
-// Basemap raster
+    col
