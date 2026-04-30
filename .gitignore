@@ -1,0 +1,33 @@
+# GAIA — arquivos a ignorar pelo git
+
+# Pasta de ingestão temporária — ZIPs e shapefiles brutos da IUCN/INCRA/etc
+# Os arquivos aqui são processados e os GeoJSONs simplificados vão para data/.
+incoming/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Node
+node_modules/
+*.log
+npm-debug.log*
+
+# Logs e dumps
+*.log
+*.dump
