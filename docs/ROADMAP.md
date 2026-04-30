@@ -6,9 +6,9 @@ Cronograma agressivo, calibrado para um time de duas pessoas (Alexandre + Claude
 
 | Sprint | Foco | Entregáveis |
 |---|---|---|
-| **S1 — esta semana** | Setup e estrutura | Repositório criado, estrutura modular, índice institucional, primeira camada (UCs amostra) renderizando. Manifesto e política de dados sensíveis publicados. |
-| S2 | Ingestão real do CNUC | Substituir amostra por shapefile oficial CNUC. Script Python de ingestão em `/scripts/ingest_cnuc.py` que gera o GeoJSON simplificado. |
-| S3 | Camada Terras Indígenas | Ingestão FUNAI + complementação ISA. Módulo `modules/layers/indigenous-lands.js`. |
+| **S1** ✅ | Setup e estrutura | Repositório criado, estrutura modular, índice institucional, primeira camada (UCs amostra) renderizando. Manifesto e política de dados sensíveis publicados. Deploy contínuo em gaia.muvuka.org. |
+| **S2** ✅ | Ingestão real do CNUC | Shapefile oficial CNUC 2024.02 ingerido — 2.741 UCs ativas com geometria simplificada (~500m). Atributos: categoria, grupo, esfera, gestor, bioma, UF, área. |
+| **S3** ✅ | Camada Terras Indígenas | 655 TIs do GeoServer oficial da FUNAI ingeridas. Módulo `modules/layers/indigenous-lands.js`. Opacidade do fill varia por estágio (regularizada → em estudo). |
 | S4 | Sidebar avançada e ficha | Filtro por bioma e UF, ficha de território expandida com texto institucional e link para fonte oficial. |
 | S5 | Camada Quilombolas + Assentamentos | Dois módulos novos. Validação cruzada de áreas. |
 | S6 | Busca por município | Geocoding via IBGE Localidades. `/search` funcional. |

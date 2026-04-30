@@ -1,23 +1,19 @@
 // ============================================================
-// GAIA — Módulo: Unidades de Conservação
-// Cada camada é um módulo isolado com a mesma interface:
-//   register(map): adiciona a camada ao mapa
-//   show(map):     torna visível
-//   hide(map):     oculta
-//   onClick(map, callback): handler de clique em feature
+// GAIA — Módulo: Terras Indígenas
+// Mesma interface dos outros módulos de camada:
+//   register(map), show(map), hide(map), onClick(map, cb), meta
 // ============================================================
 
 import { LAYERS } from '../../core/config.js';
 import { getJSON } from '../../core/http.js';
 
-const LAYER = LAYERS['conservation-units'];
-const SOURCE_ID = 'src-conservation-units';
-const FILL_LAYER_ID = 'lyr-conservation-units-fill';
-const LINE_LAYER_ID = 'lyr-conservation-units-line';
+const LAYER = LAYERS['indigenous-lands'];
+const SOURCE_ID = 'src-indigenous-lands';
+const FILL_LAYER_ID = 'lyr-indigenous-lands-fill';
+const LINE_LAYER_ID = 'lyr-indigenous-lands-line';
 
-// Resolvido relativo ao próprio módulo JS — funciona em qualquer subpath de deploy.
-// Dataset oficial: 2741 UCs ativas do CNUC 2024.02, geometrias simplificadas a ~500m.
-const DATA_URL = new URL('../../data/conservation-units.geojson', import.meta.url).href;
+// Dataset oficial: 655 terras indígenas do GeoServer da FUNAI, geometrias simplificadas a ~500m.
+const DATA_URL = new URL('../../data/indigenous-lands.geojson', import.meta.url).href;
 
 let cachedData = null;
 
@@ -41,7 +37,18 @@ export async function register(map) {
       source: SOURCE_ID,
       paint: {
         'fill-color': LAYER.color,
-        'fill-opacity': 0.25,
+        // Diferencia o fill por estágio: regularizada mais opaca, em estudo mais translúcida.
+        'fill-opacity': [
+          'match',
+          ['get', 'phase'],
+          'Regularizada', 0.32,
+          'Homologada', 0.28,
+          'Declarada', 0.22,
+          'Delimitada', 0.18,
+          'Encaminhada RI', 0.14,
+          'Em Estudo', 0.10,
+          0.20,
+        ],
       },
       layout: { visibility: LAYER.visibleByDefault ? 'visible' : 'none' },
     });
@@ -54,7 +61,7 @@ export async function register(map) {
       source: SOURCE_ID,
       paint: {
         'line-color': LAYER.color,
-        'line-width': 1.5,
+        'line-width': 1.2,
       },
       layout: { visibility: LAYER.visibleByDefault ? 'visible' : 'none' },
     });
@@ -88,4 +95,7 @@ export function onClick(map, callback) {
   });
 
   map.on('mouseenter', FILL_LAYER_ID, () => { map.getCanvas().style.cursor = 'pointer'; });
-  map.on('mouseleave', FILL_LAYER_ID, () => { map.getCanvas().styl
+  map.on('mouseleave', FILL_LAYER_ID, () => { map.getCanvas().style.cursor = ''; });
+}
+
+export const meta = LAYER;

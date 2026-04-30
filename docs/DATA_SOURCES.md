@@ -4,9 +4,9 @@ Inventário das fontes oficiais que alimentam GAIA, com status de ingestão. Tod
 
 | Camada | Fonte oficial | URL | Formato | Status | Notas |
 |---|---|---|---|---|---|
-| Unidades de Conservação | CNUC / MMA | https://dados.mma.gov.br/dataset/unidades-de-conservacao | Shapefile / GeoJSON | 🟡 amostra | Substituir amostra por shapefile oficial na S2. |
-| Unidades de Conservação federais | ICMBio | https://www.icmbio.gov.br/portal/geoprocessamentos/51-menu-servicos/4004-downloads-mapa-tematico-e-dados-geoestatisticos-das-uc-s | Shapefile | ⏳ pendente | Útil para detalhar gestão federal. |
-| Terras Indígenas | FUNAI | https://www.gov.br/funai/pt-br/atuacao/terras-indigenas/geoprocessamento-e-mapas | Shapefile | ⏳ pendente | Cruzar com base do ISA para preencher metadata adicional. |
+| Unidades de Conservação | CNUC / MMA | https://dados.mma.gov.br/dataset/unidadesdeconservacao | Shapefile → GeoJSON | ✅ oficial | 2.741 UCs ativas do CNUC 2024.02. Geometria simplificada (~500m). |
+| Unidades de Conservação federais | ICMBio | https://www.icmbio.gov.br/portal/geoprocessamentos/51-menu-servicos/4004-downloads-mapa-tematico-e-dados-geoestatisticos-das-uc-s | Shapefile | ⏳ pendente | Complementa CNUC com dados específicos de gestão federal (planos de manejo, etc). |
+| Terras Indígenas | FUNAI | https://geoserver.funai.gov.br/ | WFS → GeoJSON | ✅ oficial | 655 TIs do GeoServer FUNAI (referência 2023-09-05). Atributo `phase` com estágio (Regularizada, Homologada, Declarada, Delimitada, Encaminhada RI, Em Estudo). |
 | Terras Indígenas (curadoria social) | Instituto Socioambiental (ISA) | https://terrasindigenas.org.br/ | API / scraping | ⏳ pendente | Complementa FUNAI com fichas comunitárias. |
 | Territórios Quilombolas | INCRA / Sigef | https://acervofundiario.incra.gov.br/ | Shapefile | ⏳ pendente | Validar processo administrativo. |
 | Quilombos certificados | Fundação Cultural Palmares | https://www.gov.br/palmares/ | CSV | ⏳ pendente | Complementa INCRA com certificação cultural. |

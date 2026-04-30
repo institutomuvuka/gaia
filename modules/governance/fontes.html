@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="GAIA — fontes oficiais de dados, com auditoria pública e cross-check entre instituições." />
+  <title>Fontes — GAIA</title>
+
+  <link rel="stylesheet" href="../../styles/tokens.css" />
+  <link rel="stylesheet" href="../../styles/base.css" />
+  <link rel="stylesheet" href="../../styles/components.css" />
+
+  <style>
+    .fontes-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--gaia-space-6) 0;
+      font-size: var(--gaia-text-sm);
+      background: var(--gaia-card);
+      border: 1px solid var(--gaia-border);
+      border-radius: var(--gaia-radius-lg);
+      overflow: hidden;
+    }
+    .fontes-table th, .fontes-table td {
+      padding: var(--gaia-space-3) var(--gaia-space-4);
+      text-align: left;
+      border-bottom: 1px solid var(--gaia-border);
+      vertical-align: top;
+    }
+    .fontes-table th {
+      background: var(--gaia-green-100);
+      color: var(--gaia-green-900);
+      font-weight: 600;
+      font-size: var(--gaia-text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .fontes-table tr:last-child td { border-bottom: 0; }
+    .fontes-table .num { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+    .fontes-status {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: var(--gaia-radius-pill);
+      font-size: var(--gaia-text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .fontes-status--official { background: rgba(5, 150, 105, 0.1); color: var(--gaia-success-500); }
+    .fontes-status--planned  { background: rgba(217, 119, 6, 0.1); color: var(--gaia-warn-500); }
+    .fontes-status--review   { background: rgba(31, 111, 74, 0.1); color: var(--gaia-green-700); }
+
+    .fontes-callout {
+      background: var(--gaia-green-100);
+      border-left: 4px solid var(--gaia-green-700);
+      padding: var(--gaia-space-4) var(--gaia-space-6);
+      border-radius: var(--gaia-radius-md);
+      margin: var(--gaia-space-6) 0;
+    }
+    .fontes-callout p { margin: 0; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Pular para o conteúdo</a>
+
+  <header class="gaia-header" role="banner">
+    <a href="../../index.html" class="gaia-header__brand" style="text-decoration: none; display: flex; align-items: center; gap: var(--gaia-space-3);">
+      <span class="gaia-header__brand-mark" aria-hidden="true">G</span>
+      <span>GAIA</span>
+      <span style="font-size: var(--gaia-text-xs); font-weight: 500; color: var(--gaia-warn-500); background: rgba(217, 119, 6, 0.1); padding: 2px 10px; border-radius: var(--gaia-radius-pill); text-transform: uppercase; letter-spacing: 0.05em;">MVP em construção pública</span>
+    </a>
+    <nav aria-label="Navegação principal">
+      <ul class="gaia-header__nav">
+        <li><a href="../map/map.html">Mapa</a></li>
+        <li><a href="../../index.html#sobre">Sobre</a></li>
+        <li><a href="../../index.html#camadas">Camadas</a></li>
+        <li><a href="./fontes.html">Fontes</a></li>
+        <li><a href="../../index.html#governanca">Governança</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="gaia-container" style="padding: var(--gaia-space-12) 0;">
+
+    <h1>Fontes de dados</h1>
+    <p style="font-size: var(--gaia-text-lg); max-width: 760px;">
+      Toda camada de GAIA é construída sobre fontes públicas, oficiais e auditáveis. Esta página lista cada fonte, seu status de ingestão na plataforma, a referência cruzada com outras instituições, e os números atuais. Quando há divergência entre fontes — e há — explicamos por quê.
+    </p>
+
+    <h2 style="margin-top: var(--gaia-space-12);">Status atual</h2>
+
+    <table class="fontes-table">
+      <thead>
+        <tr>
+          <th>Camada</th>
+          <th>Fonte primária</th>
+          <th>Fonte de cross-check</th>
+          <th>Total na plataforma</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Unidades de Conservação</strong></td>
+          <td>
+            <a href="https://dados.mma.gov.br/dataset/unidadesdeconservacao" target="_blank" rel="noopener">CNUC / MMA</a><br>
+            <span style="color: var(--gaia-ink-500); font-size: var(--gaia-text-xs);">Cadastro Nacional, snapshot 2024.02</span>
+          </td>
+          <td>
+            <a href="https://www.gov.br/icmbio/" target="_blank" rel="noopener">ICMBio</a> (UCs federais)<br>
+            <a href="https://uc.socioambiental.org/" target="_blank" rel="noopener">Painel ISA</a> (curadoria social)
+          </td>
+          <td class="num">2.741 UCs ativas</td>
+          <td><span class="fontes-status fontes-status--official">Oficial</span></td>
+        </tr>
+        <tr>
+          <td><strong>Terras Indígenas</strong></td>
+          <td>
+            <a href="https://geoserver.funai.gov.br/" target="_blank" rel="noopener">GeoServer FUNAI</a><br>
+            <span style="color: var(--gaia-ink-500); font-size: var(--gaia-text-xs);">Camada `tis_poligonais` — ref. 2023-09-05</span>
+          </td>
+          <td>
+            <a href="https://terrasindigenas.org.br/" target="_blank" rel="noopener">ISA — Terras Indígenas no Brasil</a><br>
+            <a href="https://www.gov.br/funai/pt-br/atuacao/terras-indigenas/geoprocessamento-e-mapas" target="_blank" rel="noopener">FUNAI — Geoprocessamento</a>
+          </td>
+          <td class="num">655 TIs com polígono</td>
+          <td><span class="fontes-status fontes-status--official">Oficial</span></td>
+        </tr>
+        <tr>
+          <td><strong>Territórios Quilombolas</strong></td>
+          <td>
+            <a href="https://acervofundiario.incra.gov.br/" target="_blank" rel="noopener">INCRA / Sigef</a>
+          </td>
+          <td>
+            <a href="https://www.gov.br/palmares/" target="_blank" rel="noopener">Fundação Cultural Palmares</a> (certificação cultural)<br>
+            <a href="https://www.conaq.org.br/" target="_blank" rel="noopener">CONAQ</a> (movimento social)
+          </td>
+          <td>—</td>
+          <td><span class="fontes-status fontes-status--planned">Sprint 5</span></td>
+        </tr>
+        <tr>
+          <td><strong>Assentamentos da reforma agrária</strong></td>
+          <td>
+            <a href="https://acervofundiario.incra.gov.br/" target="_blank" rel="noopener">INCRA / Sigef</a>
+          </td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="fontes-status fontes-status--planned">Sprint 5</span></td>
+        </tr>
+        <tr>
+          <td><strong>Bacias hidrográficas</strong></td>
+          <td>
+            <a href="https://metadados.snirh.gov.br/" target="_blank" rel="noopener">ANA — Ottobacias</a>
+          </td>
+          <td>
+            <a href="https://www.ibge.gov.br/geociencias/" target="_blank" rel="noopener">IBGE — Hidrografia</a>
+          </td>
+          <td>—</td>
+          <td><span class="fontes-status fontes-status--planned">Sprint 7</span></td>
+        </tr>
+        <tr>
+          <td><strong>Nascentes</strong></td>
+          <td>
+            <a href="https://www.ana.gov.br/" target="_blank" rel="noopener">ANA</a> + dados primários colaborativos
+          </td>
+          <td>
+            Custodiantes locais (associações comunitárias, proprietários)<br>
+            <span style="color: var(--gaia-ink-500); font-size: var(--gaia-text-xs);">Camada com tier <strong>Agregado</strong> por padrão — ver política</span>
+          </td>
+          <td>—</td>
+          <td><span class="fontes-status fontes-status--planned">Sprint 9</span></td>
+        </tr>
+        <tr>
+          <td><strong>Cobertura e uso da terra</strong></td>
+          <td>
+            <a href="https://mapbiomas.org/" target="_blank" rel="noopener">MapBiomas</a>
+          </td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="fontes-status fontes-status--planned">Sprint 7</span></td>
+        </tr>
+        <tr>
+          <td><strong>Alertas de desmatamento</strong></td>
+          <td>
+            <a href="https://www.globalforestwatch.org/" target="_blank" rel="noopener">Global Forest Watch (GLAD/RADD)</a>
+          </td>
+          <td>
+            <a href="http://terrabrasilis.dpi.inpe.br/" target="_blank" rel="noopener">INPE — TerraBrasilis</a>
+          </td>
+          <td>—</td>
+          <td><span class="fontes-status fontes-status--planned">Sprint 7</span></td>
+        </tr>
+        <tr>
+          <td><strong>Espécies ameaçadas</strong></td>
+          <td>
+            <a href="https://www.iucnredlist.org/" target="_blank" rel="noopener">IUCN Red List</a>
+          </td>
+          <td>
+            <a href="https://www.gov.br/icmbio/pt-br/assuntos/biodiversidade/fauna-brasileira/lista-de-especies" target="_blank" rel="noopener">ICMBio — Lista oficial nacional</a><br>
+            <a href="https://www.gbif.org/" target="_blank" rel="noopener">GBIF</a> (ocorrências)
+          </td>
+          <td>—</td>
+          <td><span class="fontes-status fontes-status--planned">Sprint 8</span></td>
+        </tr>
+        <tr>
+          <td><strong>Pesquisa acadêmica</strong></td>
+          <td>
+            Repositórios institucionais via OAI-PMH
+          </td>
+          <td>
+            UFSB, UFSCar, USP, UFV, UnB, UEFS, UFBA, UFPA<br>
+            <span style="color: var(--gaia-ink-500); font-size: var(--gaia-text-xs);">Plataforma <a href="https://sucupira.capes.gov.br/" target="_blank" rel="noopener">Sucupira/CAPES</a> para validação de autoria</span>
+          </td>
+          <td>—</td>
+          <td><span class="fontes-status fontes-status--planned">Sprint 9</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 style="margin-top: var(--gaia-space-12);">Por que os números diferem entre fontes</h2>
+
+    <p>Você vai encontrar na imprensa números diferentes para a mesma coisa. Isso é normal e pode ter várias razões legítimas. Documentamos abaixo as divergências que conhecemos para que ninguém se assuste.</p>
+
+    <h3>Unidades de Conservação — por que 2.741?</h3>
+
+    <p>O CNUC 2024.02 traz 2.741 UCs ativas. Outras citações comuns:</p>
+
+    <ul>
+      <li><strong>335 UCs federais (ICMBio)</strong> — refere-se apenas às UCs sob gestão direta do ICMBio. O CNUC traz 989 federais porque inclui as <strong>RPPNs federais</strong> (privadas, mas reconhecidas pelo governo federal — 653 unidades). 989 − 653 = 336, valor próximo aos 335 reportados pelo ICMBio.</li>
+      <li><strong>2.201 UCs (Wikipedia / SNUC 2025)</strong> — snapshot anterior ao do nosso dataset. O CNUC é atualizado continuamente.</li>
+      <li><strong>Painel ISA</strong> — pode aplicar filtros próprios (excluir RPPN, agrupar por bioma, etc).</li>
+    </ul>
+
+    <p>Nosso valor (2.741) reflete <strong>exatamente</strong> o que está no CNUC oficial em 2024.02. As 1.106 RPPNs no nosso dataset são reservas privadas com registro oficial — terras protegidas legítimas, mas pequenas e dispersas.</p>
+
+    <h3>Terras Indígenas — por que 655 e não 764?</h3>
+
+    <p>A FUNAI registra atualmente 764 terras indígenas em diferentes fases administrativas. O nosso dataset traz 655 porque consumimos especificamente a camada <code>tis_poligonais</code> do GeoServer da FUNAI — apenas TIs com polígono delimitado.</p>
+
+    <ul>
+      <li>TIs em fase <em>Em estudo</em> normalmente ainda não têm polígono — aparecem em outra camada (<code>tis_pontos</code>) que não ingerimos no MVP.</li>
+      <li>O ISA cita 728 TIs com critérios próprios; o número varia conforme fonte e data.</li>
+    </ul>
+
+    <p>Resumo dos estágios das 655 TIs do GAIA:</p>
+    <ul>
+      <li>494 <strong>Regularizadas</strong> — etapa final do processo demarcatório</li>
+      <li>17 <strong>Homologadas</strong> — penúltima etapa, falta apenas registro</li>
+      <li>73 <strong>Declaradas</strong></li>
+      <li>41 <strong>Delimitadas</strong></li>
+      <li>24 <strong>Encaminhadas RI</strong> (reserva indígena)</li>
+      <li>6 <strong>Em Estudo</strong> com polígono provisório</li>
+    </ul>
+
+    <div class="fontes-callout">
+      <p><strong>Compromisso de transparência:</strong> sempre que uma camada do GAIA tiver número diferente de uma fonte oficial alternativa, vamos documentar a divergência aqui. Se você encontrar uma divergência que não está listada, abra um issue no GitHub: <a href="https://github.com/institutomuvuka/gaia/issues" target="_blank" rel="noopener">github.com/institutomuvuka/gaia/issues</a>.</p>
+    </div>
+
+    <h2 style="margin-top: var(--gaia-space-12);">Como reproduzir as ingestões</h2>
+
+    <p>Todos os pipelines são scripts Python reproduzíveis no diretório <code>/scripts</code> do repositório:</p>
+
+    <ul>
+      <li><code>scripts/ingest_cnuc.py</code> — baixa o shapefile oficial do MMA, simplifica a geometria e gera <code>data/conservation-units.geojson</code></li>
+      <li><code>scripts/ingest_funai_tis.py</code> — consome o WFS oficial da FUNAI e gera <code>data/indigenous-lands.geojson</code></li>
+    </ul>
+
+    <p>Para rodar:</p>
+    <pre><code>pip install geopandas
+python3 scripts/ingest_cnuc.py
+python3 scripts/ingest_funai_tis.py</code></pre>
+
+    <p>Quando MMA ou FUNAI publicarem novas versões dos datasets, basta rodar o script novamente. As camadas no mapa atualizam automaticamente após o próximo deploy.</p>
+
+    <p style="margin-top: var(--gaia-space-12); padding-top: var(--gaia-space-6); border-top: 1px solid var(--gaia-border); color: var(--gaia-ink-500); font-size: var(--gaia-text-sm);">
+      Última atualização: 2026-04-30. Dados oficiais consumidos: CNUC 2024.02 e FUNAI <code>tis_poligonais</code> referência 2023-09-05.
+    </p>
+
+  </main>
+
+  <footer class="gaia-footer" role="contentinfo">
+    <div class="gaia-container gaia-footer__legal" style="text-align: center;">
+      © 2026 Instituto Muvuka. GAIA é um software livre sob AGPL-3.0.
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -75,16 +75,21 @@ function showFeaturePanel(feature) {
   titleEl.innerHTML = `<span aria-hidden="true">${feature.icon}</span> ${feature.label}`;
   nameEl.textContent = feature.properties.name || feature.properties.id || 'Sem nome';
 
+  const p = feature.properties;
   const rows = [];
-  if (feature.properties.category) rows.push(['Categoria', feature.properties.category]);
-  if (feature.properties.manager) rows.push(['Gestor', feature.properties.manager]);
-  if (feature.properties.biome) rows.push(['Bioma', feature.properties.biome]);
-  if (feature.properties.uf) rows.push(['UF', feature.properties.uf]);
-  if (feature.properties.areaHa) rows.push(['Área', `${feature.properties.areaHa.toLocaleString('pt-BR')} ha`]);
-  if (feature.properties.decreeYear) rows.push(['Criada em', feature.properties.decreeYear]);
+  if (p.category) rows.push(['Categoria', p.category]);
+  if (p.group) rows.push(['Grupo', p.group]);
+  if (p.sphere) rows.push(['Esfera', p.sphere]);
+  if (p.manager) rows.push(['Gestor', p.manager]);
+  if (p.biome) rows.push(['Bioma', p.biome]);
+  if (p.uf) rows.push(['UF', p.uf]);
+  if (p.areaHa) rows.push(['Área', `${Number(p.areaHa).toLocaleString('pt-BR', { maximumFractionDigits: 0 })} ha`]);
+  if (p.decreeYear) rows.push(['Criada em', p.decreeYear]);
+  if (p.peoples) rows.push(['Povos', p.peoples]);
+  if (p.phase) rows.push(['Estágio', p.phase]);
   rows.push([t('map.feature.sensitivity'), renderTier(feature.sensitivity)]);
-  if (feature.properties.sourceUrl) {
-    rows.push([t('map.feature.source'), `<a href="${feature.properties.sourceUrl}" target="_blank" rel="noopener">Fonte oficial ↗</a>`]);
+  if (p.sourceUrl) {
+    rows.push([t('map.feature.source'), `<a href="${p.sourceUrl}" target="_blank" rel="noopener">Fonte oficial ↗</a>`]);
   }
 
   body.innerHTML = rows
@@ -143,10 +148,10 @@ async function bootstrap() {
       }
     }
 
-    // Centraliza no estado da Bahia para visualizar a amostra inicial.
-    map.flyTo({ center: [-39.5, -14.5], zoom: 7, duration: 1500 });
+    // Brasil inteiro à vista, com leve enquadramento sobre o centro-oeste.
+    map.flyTo({ center: [-52.0, -14.0], zoom: 4, duration: 1200 });
 
-    toast('Camada carregada: Unidades de Conservação (amostra)');
+    toast('Dados oficiais carregados: 2.741 UCs do CNUC');
   });
 
   // Monta a sidebar e conecta toggles.

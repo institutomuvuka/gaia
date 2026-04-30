@@ -59,8 +59,8 @@ GALI/
 
 MVP em desenvolvimento. Camadas implementadas:
 
-- ✅ Unidades de Conservação (amostra de Bahia, ingerir CNUC oficial é tarefa da S2)
-- ⏳ Terras Indígenas (S3)
+- ✅ Unidades de Conservação — 2.741 UCs ativas do CNUC oficial 2024.02
+- ✅ Terras Indígenas — 655 TIs do GeoServer FUNAI (atributo de estágio por feature)
 - ⏳ Territórios Quilombolas (S5)
 - ⏳ Nascentes (S5–S6, com política de dados sensíveis)
 - ⏳ Espécies Ameaçadas (S8)
