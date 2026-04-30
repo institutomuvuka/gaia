@@ -55,12 +55,18 @@ export const LAYERS = Object.freeze({
     id: 'quilombola-territories',
     label: 'Territórios Quilombolas',
     icon: '✊🏿',
-    description: 'Territórios quilombolas reconhecidos por INCRA, Palmares e CONAC.',
-    source: { origin: 'INCRA / Palmares / CONAC', url: 'https://www.gov.br/incra/', ingestionStatus: 'pending' },
+    description: '94 territórios do Semi-Árido (INSA/INCRA). Cobertura nacional pendente — INCRA Sigef atrás de login.',
+    source: {
+      origin: 'INSA / INCRA',
+      url: 'https://www.gov.br/insa/pt-br/centrais-de-conteudo/mapas',
+      reference: 'Quilombos-SAB-INCRA — 2020-02-07',
+      lastFetched: '2026-04-30',
+      ingestionStatus: 'partial',
+    },
     sensitivity: 'public',
     color: '#8B5A2B',
     visibleByDefault: false,
-    module: null,
+    module: './modules/layers/quilombolas.js',
   },
   'nascentes': {
     id: 'nascentes',
@@ -118,13 +124,4 @@ export const SENSITIVITY = Object.freeze({
 });
 
 // Configuração do mapa base.
-export const MAP = Object.freeze({
-  // Centro inicial — Brasil; o usuário pode ajustar via geolocalização.
-  initialCenter: [-50.0, -15.0],
-  initialZoom: 4,
-  minZoom: 3,
-  maxZoom: 18,
-  // Estilo de basemap aberto (sem token), do MapLibre demo tiles.
-  // Para produção, trocar por tile server próprio (ver docs/ROADMAP.md).
-  baseStyle: 'https://demotiles.maplibre.org/style.json',
-});
+// Basemap raster

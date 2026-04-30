@@ -88,4 +88,4 @@ Nascentes têm tratamento específico porque são, simultaneamente, objeto de co
 
 ## 8. Como propor mudança a esta política
 
-Abra um pull request em `/policies/dados-sensiveis.md` ou um issue com a label `politica:dados-sensiveis`. Toda mudança aceita é registrada na seção 7.
+Abra um pull request em `/policies/dados-sensiveis.md` ou um issue com a label `politica:dados-sensiveis`. Toda mudança aceita é registrada na seç�

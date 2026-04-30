@@ -36,6 +36,4 @@ Cronograma agressivo, calibrado para um time de duas pessoas (Alexandre + Claude
 ## Marcos demonstráveis
 
 - Fim da S1: primeiro mapa público funcional, política aberta.
-- Fim da S6: 4 camadas + busca por município. Primeira versão demonstrável a financiadores.
-- Fim da S9: 7 camadas + governança de nascentes em prática.
-- Fim da S12: lançamento beta com tração mensurável.
+- Fim da S6: 4 camadas + busca por município. Primeira versão demonstrá

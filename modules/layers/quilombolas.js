@@ -1,23 +1,19 @@
 // ============================================================
-// GAIA — Módulo: Unidades de Conservação
-// Cada camada é um módulo isolado com a mesma interface:
-//   register(map): adiciona a camada ao mapa
-//   show(map):     torna visível
-//   hide(map):     oculta
-//   onClick(map, callback): handler de clique em feature
+// GAIA — Módulo: Territórios Quilombolas
+// Mesma interface dos outros módulos de camada.
 // ============================================================
 
 import { LAYERS } from '../../core/config.js';
 import { getJSON } from '../../core/http.js';
 
-const LAYER = LAYERS['conservation-units'];
-const SOURCE_ID = 'src-conservation-units';
-const FILL_LAYER_ID = 'lyr-conservation-units-fill';
-const LINE_LAYER_ID = 'lyr-conservation-units-line';
+const LAYER = LAYERS['quilombola-territories'];
+const SOURCE_ID = 'src-quilombolas';
+const FILL_LAYER_ID = 'lyr-quilombolas-fill';
+const LINE_LAYER_ID = 'lyr-quilombolas-line';
 
-// Resolvido relativo ao próprio módulo JS — funciona em qualquer subpath de deploy.
-// Dataset oficial: 2741 UCs ativas do CNUC 2024.02, geometrias simplificadas a ~500m.
-const DATA_URL = new URL('../../data/conservation-units.geojson', import.meta.url).href;
+// Dataset PARCIAL: 94 quilombolas do Semi-Árido Brasileiro (INSA/INCRA, 2020).
+// Cobertura nacional integral depende do INCRA Sigef (atrás de login gov.br).
+const DATA_URL = new URL('../../data/quilombolas.geojson', import.meta.url).href;
 
 let cachedData = null;
 
@@ -41,7 +37,7 @@ export async function register(map) {
       source: SOURCE_ID,
       paint: {
         'fill-color': LAYER.color,
-        'fill-opacity': 0.4,
+        'fill-opacity': 0.45,
       },
       layout: { visibility: LAYER.visibleByDefault ? 'visible' : 'none' },
     });
@@ -87,4 +83,8 @@ export function onClick(map, callback) {
     });
   });
 
-  map.on('mouseenter', FILL_LAYER_ID, () => { map.getCanvas().style.cursor = 'p
+  map.on('mouseenter', FILL_LAYER_ID, () => { map.getCanvas().style.cursor = 'pointer'; });
+  map.on('mouseleave', FILL_LAYER_ID, () => { map.getCanvas().style.cursor = ''; });
+}
+
+export const meta = LAYER;

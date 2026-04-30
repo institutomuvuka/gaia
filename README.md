@@ -61,19 +61,12 @@ MVP em desenvolvimento. Camadas implementadas:
 
 - ✅ Unidades de Conservação — 2.741 UCs ativas do CNUC oficial 2024.02
 - ✅ Terras Indígenas — 655 TIs do GeoServer FUNAI (atributo de estágio por feature)
-- ⏳ Territórios Quilombolas (S5)
+- 🟡 Territórios Quilombolas — 94 do Semi-Árido (INSA/INCRA); cobertura nacional aguardando acesso ao Sigef
+- ⏳ Assentamentos — bloqueado por login gov.br no INCRA Sigef
 - ⏳ Nascentes (S5–S6, com política de dados sensíveis)
 - ⏳ Espécies Ameaçadas (S8)
 - ⏳ Cobertura MapBiomas (S7)
 
 ## Governança
 
-GAIA tem uma política de dados sensíveis (vide `/policies/dados-sensiveis.md`) revisada mensalmente por um comitê de pessoas-referência. Críticas e sugestões à política são triadas em primeira camada por um agente de IA e levadas ao comitê pela síntese.
-
-## Licença
-
-AGPL-3.0. Forks que rodem como serviço público devem manter o código aberto.
-
-## Contato
-
-`gaia@muvuka.org` — Instituto Muvuka, Bahia, Brasil.
+GAIA tem uma política de dados sensíveis (vide `/policies/dados-sensiveis.md`) revisada mensalmente por um comitê de pessoas-referência. Críticas e sugestões à política são triadas em primeira camada por um agente de IA e lev
