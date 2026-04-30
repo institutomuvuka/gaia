@@ -49,6 +49,17 @@ function renderIucn(cat) {
   return `<span style="display:inline-flex;align-items:center;gap:6px;font-weight:600;"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${color};"></span>${cat} — ${label}</span>`;
 }
 
+const TREND_LABELS = {
+  Decreasing: ['↓ Diminuindo', '#D81E05'],
+  Stable: ['→ Estável', '#FC7F3F'],
+  Increasing: ['↑ Aumentando', '#60C659'],
+  Unknown: ['? Desconhecida', '#A6A6A6'],
+};
+function renderTrend(t) {
+  const [label, color] = TREND_LABELS[t] || [t, '#A6A6A6'];
+  return `<span style="color:${color};font-weight:600;">${label}</span>`;
+}
+
 function renderSidebar(onToggle) {
   const list = document.getElementById('layer-list');
   list.innerHTML = '';
@@ -96,6 +107,8 @@ function showFeaturePanel(feature) {
   const rows = [];
   if (p.scientificName) rows.push(['Nome científico', `<em>${p.scientificName}</em>`]);
   if (p.iucnCategory) rows.push(['Categoria IUCN', renderIucn(p.iucnCategory)]);
+  if (p.iucnYear) rows.push(['Avaliação IUCN', `${p.iucnYear}${p.iucnCriteria ? ' · critério ' + p.iucnCriteria : ''}`]);
+  if (p.iucnPopulationTrend) rows.push(['Tendência populacional', renderTrend(p.iucnPopulationTrend)]);
   if (p.category) rows.push(['Categoria', p.category]);
   if (p.group) rows.push(['Grupo', p.group]);
   if (p.habitat) rows.push(['Habitat', p.habitat]);
@@ -108,9 +121,19 @@ function showFeaturePanel(feature) {
   if (p.peoples) rows.push(['Povos', p.peoples]);
   if (p.phase) rows.push(['Estágio', p.phase]);
   if (p.occurrences) rows.push(['Ocorrências GBIF', p.occurrences]);
+  if (p.iucnThreats) {
+    let threats = p.iucnThreats;
+    if (typeof threats === 'string') { try { threats = JSON.parse(threats); } catch (_) { threats = [threats]; } }
+    if (threats && threats.length) {
+      rows.push(['Principais ameaças', `<ul style="margin:0;padding-left:18px;">${threats.slice(0,4).map(t => `<li>${t}</li>`).join('')}</ul>`]);
+    }
+  }
   rows.push([t('map.feature.sensitivity'), renderTier(feature.sensitivity)]);
+  if (p.iucnUrl) {
+    rows.push(['Avaliação oficial', `<a href="${p.iucnUrl}" target="_blank" rel="noopener">IUCN Red List ↗</a>`]);
+  }
   if (p.sourceUrl) {
-    rows.push([t('map.feature.source'), `<a href="${p.sourceUrl}" target="_blank" rel="noopener">Fonte oficial ↗</a>`]);
+    rows.push([t('map.feature.source'), `<a href="${p.sourceUrl}" target="_blank" rel="noopener">Fonte ↗</a>`]);
   }
 
   body.innerHTML = rows
@@ -129,37 +152,4 @@ function toast(message, ms = 3000) {
   if (existing) existing.remove();
   const el = document.createElement('div');
   el.className = 'gaia-toast';
-  el.textContent = message;
-  document.querySelector('.gaia-map-canvas').appendChild(el);
-  setTimeout(() => el.remove(), ms);
-}
-
-async function bootstrap() {
-  document.getElementById('app-name').textContent = APP.name;
-  document.getElementById('app-tagline').textContent = APP.tagline;
-
-  const map = new maplibregl.Map({
-    container: 'map',
-    style: MAP.baseStyle,
-    center: MAP.initialCenter,
-    zoom: MAP.initialZoom,
-    minZoom: MAP.minZoom,
-    maxZoom: MAP.maxZoom,
-  });
-  activeMap = map;
-
-  map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
-  map.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'bottom-left');
-
-  map.on('load', async () => {
-    // Registra todas as camadas declaradas que tenham módulo implementado.
-    for (const layer of Object.values(LAYERS)) {
-      if (!layer.module) continue;
-      const mod = await loadLayerModule(layer);
-      if (!mod) {
-        toast(`${t('error.loadLayer')} (${layer.label})`);
-        continue;
-      }
-      try {
-        await mod.register(map);
-        if (mod.onClick
+  
