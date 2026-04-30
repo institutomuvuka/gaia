@@ -26,14 +26,6 @@ Cronograma agressivo, calibrado para um time de duas pessoas (Alexandre + Claude
 - Pipeline de moderação por agente Claude.
 - Onboarding do comitê de pessoas-referência.
 
-## Fase 3 — Escala e parcerias (meses 7–12)
+## Backlog — itens agendados
 
-- Integração com universidades (harvester de TCCs em produção).
-- API pública para consumo por terceiros.
-- Backend dedicado (PostGIS + pg_tileserv).
-- Captação de R$ 800 mil – R$ 1,5 mi para sustentar o time e a operação.
-
-## Marcos demonstráveis
-
-- Fim da S1: primeiro mapa público funcional, política aberta.
-- Fim da S6: 4 camadas + busca por município. Primeira versão demonstrá
+- **2026-05-14 → IUCN Spatial Data download para grupos aquáticos.** Baixar manualmente (um a um, em ritmo confortável) os datasets IUCN: **Fishes** (Chondrichthyes, Eels, Groupers, Salmonids, Tunas, Wrasses, Marine Fishes), **Marine groups** (Reef-forming Corals, Mangroves, Seagrasses, Lobsters, Cone Snails, Abalones), **Freshwater groups** (Crabs, Crayfishes, Fishes, Molluscs, Odonata, Plants, Shrimps). Filt
