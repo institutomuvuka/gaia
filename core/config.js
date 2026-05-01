@@ -11,11 +11,9 @@ export const APP = Object.freeze({
   version: '0.1.0-mvp',
   license: 'AGPL-3.0',
   org: 'Instituto Muvuka',
-  contactEmail: 'gaia@muvuka.org', // placeholder até definirmos
+  contactEmail: 'gaia@muvuka.org',
 });
 
-// Cada camada da plataforma é declarada aqui. Os módulos consomem
-// este registro e renderizam toggles, legendas e fontes automaticamente.
 export const LAYERS = Object.freeze({
   'conservation-units': {
     id: 'conservation-units',
@@ -74,7 +72,7 @@ export const LAYERS = Object.freeze({
     icon: '💧',
     description: 'Nascentes de rios e riachos. Dado sensível: ver Política de Dados Sensíveis.',
     source: { origin: 'ANA + dados primários colaborativos', url: 'https://www.ana.gov.br/', ingestionStatus: 'pending' },
-    sensitivity: 'aggregated', // default — vide policies/dados-sensiveis.md
+    sensitivity: 'aggregated',
     color: '#2F8FBE',
     visibleByDefault: false,
     module: null,
@@ -83,11 +81,11 @@ export const LAYERS = Object.freeze({
     id: 'threatened-species',
     label: 'Espécies Ameaçadas',
     icon: '🦋',
-    description: '25 espécies-bandeira (mamíferos, aves, répteis, anfíbios e flora). Polígonos coloridos pela categoria IUCN (CR/EN/VU/NT/LC).',
+    description: '25 espécies-bandeira. 15 com polígono oficial IUCN, 10 com concave hull GBIF.',
     source: {
-      origin: 'GBIF + IUCN Red List category',
-      url: 'https://www.gbif.org/',
-      reference: 'Polígonos via concave hull de ocorrências GBIF; categoria IUCN preservada por ocorrência.',
+      origin: 'IUCN Spatial Data + Red List API v4 + GBIF',
+      url: 'https://www.iucnredlist.org/',
+      reference: '15/25 polígonos oficiais IUCN.',
       lastFetched: '2026-04-30',
       ingestionStatus: 'official',
     },
@@ -109,8 +107,6 @@ export const LAYERS = Object.freeze({
   },
 });
 
-// Tier de sensibilidade — referência para política de dados.
-// Ver /policies/dados-sensiveis.md para a definição normativa.
 export const SENSITIVITY = Object.freeze({
   public: {
     label: 'Público',
@@ -120,4 +116,39 @@ export const SENSITIVITY = Object.freeze({
   aggregated: {
     label: 'Agregado',
     description: 'Geometria agregada a célula de 1 km (H3). Atributos sem identificação de custodiante.',
-    col
+    color: 'var(--gaia-tier-aggregated)',
+  },
+  restricted: {
+    label: 'Restrito',
+    description: 'Acesso somente a custodiantes verificados e a parceiros formais.',
+    color: 'var(--gaia-tier-restricted)',
+  },
+});
+
+const OSM_RASTER_STYLE = {
+  version: 8,
+  sources: {
+    'osm-raster': {
+      type: 'raster',
+      tiles: [
+        'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        'https://b.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      ],
+      tileSize: 256,
+      maxzoom: 19,
+      attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors',
+    },
+  },
+  layers: [
+    { id: 'osm-raster', type: 'raster', source: 'osm-raster', paint: { 'raster-opacity': 0.9 } },
+  ],
+};
+
+export const MAP = Object.freeze({
+  initialCenter: [-50.0, -15.0],
+  initialZoom: 4,
+  minZoom: 3,
+  maxZoom: 18,
+  baseStyle: OSM_RASTER_STYLE,
+});
