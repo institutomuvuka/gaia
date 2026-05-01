@@ -198,15 +198,16 @@
         <tr>
           <td><strong>Espécies ameaçadas</strong></td>
           <td>
-            <a href="https://www.gbif.org/" target="_blank" rel="noopener">GBIF</a> (ocorrências georeferenciadas)<br>
-            <span style="color: var(--gaia-ink-500); font-size: var(--gaia-text-xs);">Categoria IUCN preservada por ocorrência</span>
+            <a href="https://www.iucnredlist.org/resources/spatial-data-download" target="_blank" rel="noopener">IUCN Red List Spatial Data</a> (polígonos oficiais)<br>
+            <a href="https://api.iucnredlist.org/api/v4" target="_blank" rel="noopener">IUCN Red List API v4</a> (categoria, ameaças, citação)<br>
+            <a href="https://www.gbif.org/" target="_blank" rel="noopener">GBIF</a> (concave hull para espécies sem range oficial ainda)
           </td>
           <td>
-            <a href="https://www.iucnredlist.org/" target="_blank" rel="noopener">IUCN Red List</a> (range maps oficiais — registro pendente)<br>
-            <a href="https://salve.icmbio.gov.br/" target="_blank" rel="noopener">SALVE/ICMBio</a> (Cloudflare bloqueia bots)
+            <a href="https://salve.icmbio.gov.br/" target="_blank" rel="noopener">SALVE/ICMBio</a> (Cloudflare bloqueia bots)<br>
+            <a href="https://datazone.birdlife.org/" target="_blank" rel="noopener">BirdLife Data Zone</a> (aves — registro separado pendente)
           </td>
-          <td class="num">25 espécies-bandeira</td>
-          <td><span class="fontes-status fontes-status--official">Oficial</span></td>
+          <td class="num">25 espécies-bandeira<br><span style="color: var(--gaia-ink-500); font-size: var(--gaia-text-xs);">11 polígonos oficiais IUCN · 14 concave hull GBIF</span></td>
+          <td><span class="fontes-status fontes-status--official">Oficial (misto)</span></td>
         </tr>
         <tr>
           <td><strong>Pesquisa acadêmica</strong></td>
@@ -268,14 +269,4 @@
 
     <ul>
       <li><code>scripts/ingest_cnuc.py</code> — baixa o shapefile oficial do MMA, simplifica a geometria e gera <code>data/conservation-units.geojson</code></li>
-      <li><code>scripts/ingest_funai_tis.py</code> — consome o WFS oficial da FUNAI e gera <code>data/indigenous-lands.geojson</code></li>
-    </ul>
-
-    <p>Para rodar:</p>
-    <pre><code>pip install geopandas
-python3 scripts/ingest_cnuc.py
-python3 scripts/ingest_funai_tis.py</code></pre>
-
-    <p>Quando MMA ou FUNAI publicarem novas versões dos datasets, basta rodar o script novamente. As camadas no mapa atualizam automaticamente após o próximo deploy.</p>
-
-    <p style
+      <li><code>scripts/ingest_funai_tis.py</code> — consome o WFS oficial da FUNAI e gera <code>data/indigenous-lands.geojson</c
