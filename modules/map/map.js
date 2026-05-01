@@ -8,13 +8,9 @@ import { APP, LAYERS, MAP, SENSITIVITY } from '../../core/config.js';
 import { t } from '../../core/i18n.js';
 import { attachSearch } from '../ui/search.js';
 
-const layerModules = new Map(); // layerId -> module exports
+const layerModules = new Map();
 let activeMap = null;
 
-/**
- * Carrega dinamicamente o módulo JS de uma camada.
- * Cada camada vive em /modules/layers/<id>.js e exporta a mesma interface.
- */
 async function loadLayerModule(layerDef) {
   if (!layerDef.module) return null;
   if (layerModules.has(layerDef.id)) return layerModules.get(layerDef.id);
@@ -55,38 +51,30 @@ const TREND_LABELS = {
   Increasing: ['↑ Aumentando', '#60C659'],
   Unknown: ['? Desconhecida', '#A6A6A6'],
 };
-function renderTrend(t) {
-  const [label, color] = TREND_LABELS[t] || [t, '#A6A6A6'];
+function renderTrend(tr) {
+  const [label, color] = TREND_LABELS[tr] || [tr, '#A6A6A6'];
   return `<span style="color:${color};font-weight:600;">${label}</span>`;
 }
 
 function renderSidebar(onToggle) {
   const list = document.getElementById('layer-list');
   list.innerHTML = '';
-
   Object.values(LAYERS).forEach((layer) => {
     const isAvailable = !!layer.module;
     const li = document.createElement('li');
     li.className = `gaia-layer-item ${isAvailable ? '' : 'gaia-layer-item--disabled'}`;
     li.innerHTML = `
-      <input
-        type="checkbox"
-        class="gaia-layer-item__check"
-        id="toggle-${layer.id}"
-        ${layer.visibleByDefault ? 'checked' : ''}
-        ${isAvailable ? '' : 'disabled'}
-        aria-label="Alternar camada ${layer.label}"
-      />
+      <input type="checkbox" class="gaia-layer-item__check" id="toggle-${layer.id}"
+        ${layer.visibleByDefault ? 'checked' : ''} ${isAvailable ? '' : 'disabled'}
+        aria-label="Alternar camada ${layer.label}" />
       <span class="gaia-layer-item__icon" aria-hidden="true">${layer.icon}</span>
       <div class="gaia-layer-item__body">
         <label for="toggle-${layer.id}" class="gaia-layer-item__label">${layer.label}</label>
         <div class="gaia-layer-item__source">${layer.source.origin}</div>
         ${renderTier(layer.sensitivity)}
         ${isAvailable ? '' : '<span class="gaia-layer-item__pending">Em breve</span>'}
-      </div>
-    `;
+      </div>`;
     list.appendChild(li);
-
     if (isAvailable) {
       const checkbox = li.querySelector('input');
       checkbox.addEventListener('change', () => onToggle(layer.id, checkbox.checked));
@@ -99,7 +87,6 @@ function showFeaturePanel(feature) {
   const titleEl = document.getElementById('feature-panel-title');
   const nameEl = document.getElementById('feature-panel-name');
   const body = document.getElementById('feature-panel-body');
-
   titleEl.innerHTML = `<span aria-hidden="true">${feature.icon}</span> ${feature.label}`;
   nameEl.textContent = feature.properties.name || feature.properties.id || 'Sem nome';
 
@@ -125,21 +112,14 @@ function showFeaturePanel(feature) {
     let threats = p.iucnThreats;
     if (typeof threats === 'string') { try { threats = JSON.parse(threats); } catch (_) { threats = [threats]; } }
     if (threats && threats.length) {
-      rows.push(['Principais ameaças', `<ul style="margin:0;padding-left:18px;">${threats.slice(0,4).map(t => `<li>${t}</li>`).join('')}</ul>`]);
+      rows.push(['Principais ameaças', `<ul style="margin:0;padding-left:18px;">${threats.slice(0,4).map(x => `<li>${x}</li>`).join('')}</ul>`]);
     }
   }
   rows.push([t('map.feature.sensitivity'), renderTier(feature.sensitivity)]);
-  if (p.iucnUrl) {
-    rows.push(['Avaliação oficial', `<a href="${p.iucnUrl}" target="_blank" rel="noopener">IUCN Red List ↗</a>`]);
-  }
-  if (p.sourceUrl) {
-    rows.push([t('map.feature.source'), `<a href="${p.sourceUrl}" target="_blank" rel="noopener">Fonte ↗</a>`]);
-  }
+  if (p.iucnUrl) rows.push(['Avaliação oficial', `<a href="${p.iucnUrl}" target="_blank" rel="noopener">IUCN Red List ↗</a>`]);
+  if (p.sourceUrl) rows.push([t('map.feature.source'), `<a href="${p.sourceUrl}" target="_blank" rel="noopener">Fonte ↗</a>`]);
 
-  body.innerHTML = rows
-    .map(([k, v]) => `<dl class="gaia-feature-panel__row"><dt>${k}</dt><dd>${v}</dd></dl>`)
-    .join('');
-
+  body.innerHTML = rows.map(([k, v]) => `<dl class="gaia-feature-panel__row"><dt>${k}</dt><dd>${v}</dd></dl>`).join('');
   panel.classList.add('is-open');
 }
 
@@ -152,4 +132,56 @@ function toast(message, ms = 3000) {
   if (existing) existing.remove();
   const el = document.createElement('div');
   el.className = 'gaia-toast';
-  
+  el.textContent = message;
+  document.querySelector('.gaia-map-canvas').appendChild(el);
+  setTimeout(() => el.remove(), ms);
+}
+
+async function bootstrap() {
+  document.getElementById('app-name').textContent = APP.name;
+  document.getElementById('app-tagline').textContent = APP.tagline;
+
+  const map = new maplibregl.Map({
+    container: 'map',
+    style: MAP.baseStyle,
+    center: MAP.initialCenter,
+    zoom: MAP.initialZoom,
+    minZoom: MAP.minZoom,
+    maxZoom: MAP.maxZoom,
+  });
+  activeMap = map;
+
+  map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+  map.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'bottom-left');
+
+  map.on('load', async () => {
+    for (const layer of Object.values(LAYERS)) {
+      if (!layer.module) continue;
+      const mod = await loadLayerModule(layer);
+      if (!mod) {
+        toast(`${t('error.loadLayer')} (${layer.label})`);
+        continue;
+      }
+      try {
+        await mod.register(map);
+        if (mod.onClick) mod.onClick(map, showFeaturePanel);
+      } catch (err) {
+        console.error(`Erro ao registrar ${layer.id}:`, err);
+        toast(`${t('error.loadLayer')} (${layer.label})`);
+      }
+    }
+    map.flyTo({ center: [-52.0, -14.0], zoom: 4, duration: 1200 });
+    toast('Dados carregados: 2.741 UCs · 655 TIs · 94 Quilombolas · 25 espécies ameaçadas');
+  });
+
+  renderSidebar(async (layerId, isOn) => {
+    const mod = layerModules.get(layerId);
+    if (!mod) return;
+    if (isOn) mod.show(map); else mod.hide(map);
+  });
+
+  document.getElementById('feature-panel-close').addEventListener('click', closeFeaturePanel);
+  attachSearch(document.getElementById('search-input'), map, toast);
+}
+
+document.addEventListener('DOMContentLoaded', bootstrap);
