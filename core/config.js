@@ -30,7 +30,7 @@ export const LAYERS = Object.freeze({
     sensitivity: 'public',
     color: '#2F9362',
     visibleByDefault: true,
-    module: './modules/layers/conservation-units.js',
+    module: '../layers/conservation-units.js',
   },
   'indigenous-lands': {
     id: 'indigenous-lands',
@@ -47,7 +47,7 @@ export const LAYERS = Object.freeze({
     sensitivity: 'public',
     color: '#C68B47',
     visibleByDefault: false,
-    module: './modules/layers/indigenous-lands.js',
+    module: '../layers/indigenous-lands.js',
   },
   'quilombola-territories': {
     id: 'quilombola-territories',
@@ -64,7 +64,7 @@ export const LAYERS = Object.freeze({
     sensitivity: 'public',
     color: '#8B5A2B',
     visibleByDefault: false,
-    module: './modules/layers/quilombolas.js',
+    module: '../layers/quilombolas.js',
   },
   'nascentes': {
     id: 'nascentes',
@@ -92,7 +92,7 @@ export const LAYERS = Object.freeze({
     sensitivity: 'aggregated',
     color: '#D97706',
     visibleByDefault: false,
-    module: './modules/layers/threatened-species.js',
+    module: '../layers/threatened-species.js',
   },
   'mapbiomas-cover': {
     id: 'mapbiomas-cover',
