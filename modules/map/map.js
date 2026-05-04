@@ -6,6 +6,7 @@ const layerModules = new Map();
 const layerData = new Map();
 const layerMode = new Map();
 const layerExpanded = new Set();
+const hookedLayers = new Set();  // tracks which layer ids have onClick handler attached
 let mapInstance = null;
 let currentBasemap = MAP.defaultBasemap;
 let globalPinMode = false;  // toggle global
@@ -47,8 +48,8 @@ async function setBasemap(map, basemapId) {
     if (cb.checked) checked.add(cb.id.replace('toggle-',''));
   });
 
-  // Reset hooks
-  layerModules.forEach(m => { if (m) m.__hooked = false; });
+  // Reset hooks (precisa re-anexar onClick após setStyle)
+  hookedLayers.clear();
 
   map.setStyle(bm.style);
 
@@ -61,7 +62,7 @@ async function setBasemap(map, basemapId) {
         if (!mod) continue;
         try {
           await mod.register(map);
-          if (mod.onClick && !mod.__hooked) { mod.onClick(map, showFeaturePanel); mod.__hooked = true; }
+          if (mod.onClick && !hookedLayers.has(l.id)) { mod.onClick(map, showFeaturePanel); hookedLayers.add(l.id); }
         } catch (e) { console.error('reregister', l.id, e); }
         if (checked.has(l.id)) mod.show(map); else mod.hide(map);
         if (globalPinMode || layerMode.get(l.id) === 'pins') {
@@ -355,7 +356,7 @@ async function bootstrap() {
       if (!layer.module) continue;
       const mod = await loadLayerModule(layer);
       if (!mod) continue;
-      try { await mod.register(map); if (mod.onClick) { mod.onClick(map, showFeaturePanel); mod.__hooked = true; } } catch (err) { console.error(err); }
+      try { await mod.register(map); if (mod.onClick) { mod.onClick(map, showFeaturePanel); hookedLayers.add(layer.id); } } catch (err) { console.error(err); }
     }
     map.flyTo({ center: [-52.0, -14.0], zoom: 4, duration: 1200 });
     renderBasemapToggle(map);
