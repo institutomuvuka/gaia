@@ -316,6 +316,13 @@ function showFeaturePanel(feature) {
   if (p.families) rows.push(['Famílias', `${p.families} ${p.families === 1 ? 'família' : 'famílias'}`]);
   if (p.titulationDate) rows.push(['Titulado em', p.titulationDate]);
   if (p.process) rows.push(['Processo', `<code style="font-size: 11px;">${p.process}</code>`]);
+  if (p.region) rows.push(['Região', p.region]);
+  if (p.certifier) rows.push(['Certificadora', p.certifier]);
+  if (p.palmaresProcess) rows.push(['Processo Palmares', `<code style="font-size: 11px;">${p.palmaresProcess}</code>`]);
+  if (p.palmaresOrdinance) rows.push(['Portaria Palmares', p.palmaresOrdinance]);
+  if (p.palmaresDateDOU) rows.push(['Publicação D.O.U.', p.palmaresDateDOU]);
+  if (p.incraProcess) rows.push(['Processo INCRA', `<code style="font-size: 11px;">${p.incraProcess}</code>`]);
+  if (p.incraPolygonStatus === 'pendente') rows.push(['Polígono INCRA', '<span style="color: var(--gaia-status-pending, #B85C00); font-weight: 600;">⏳ pendente</span>']);
   if (p.occurrences) rows.push(['Ocorrências', p.occurrences]);
   if (p.iucnThreats) {
     let threats = p.iucnThreats;

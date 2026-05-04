@@ -40,6 +40,16 @@ export const LAYERS = Object.freeze({
     module: '../layers/quilombolas.js',
     nameField: 'name', count: 427,
   },
+  'quilombolas-palmares-pins': {
+    id: 'quilombolas-palmares-pins', label: 'Quilombolas (Palmares — sem polígono)', icon: '📍',
+    description: '769 comunidades certificadas pela Fundação Cultural Palmares que ainda não têm polígono no INCRA Sigef. Pin = aguardando titulação ou regularização espacial.',
+    source: { origin: 'Fundação Cultural Palmares + INCRA (cross-check)',
+      url: 'https://www.gov.br/palmares/pt-br/departamentos/protecao-preservacao-e-articulacao/certificacao-quilombola',
+      reference: 'CRQs Palmares × INCRA Sigef — 2026-05', lastFetched: '2026-05-04', ingestionStatus: 'partial' },
+    sensitivity: 'public', color: '#D9A441', visibleByDefault: false,
+    module: '../layers/quilombolas-palmares.js',
+    nameField: 'name', count: 769,
+  },
   'nascentes': {
     id: 'nascentes', label: 'Nascentes', icon: '💧',
     description: 'Nascentes de rios e riachos. Dado sensível.',
