@@ -3,20 +3,18 @@ import { t } from '../../core/i18n.js';
 import { attachSearch } from '../ui/search.js';
 
 const layerModules = new Map();
-const layerData = new Map();        // layerId → loaded GeoJSON
-const layerMode = new Map();        // layerId → 'polygons' | 'pins'
-const layerExpanded = new Set();    // expanded sidebar groups
+const layerData = new Map();
+const layerMode = new Map();
+const layerExpanded = new Set();
 let mapInstance = null;
 let currentBasemap = MAP.defaultBasemap;
+let globalPinMode = false;  // toggle global
 
 async function loadLayerModule(def) {
   if (!def.module) return null;
   if (layerModules.has(def.id)) return layerModules.get(def.id);
-  try {
-    const mod = await import(def.module);
-    layerModules.set(def.id, mod);
-    return mod;
-  } catch (err) { console.error(`Falha ao carregar ${def.id}:`, err); return null; }
+  try { const mod = await import(def.module); layerModules.set(def.id, mod); return mod; }
+  catch (err) { console.error(`Falha ao carregar ${def.id}:`, err); return null; }
 }
 
 function renderTier(tier) {
@@ -38,38 +36,41 @@ function renderTrend(tr) { const [label, color] = TREND_LABELS[tr] || [tr,'#9E9E
   return `<span style="color:${color};font-weight:600;">${label}</span>`; }
 
 // ============== BASEMAP TOGGLE ==============
-function setBasemap(map, basemapId) {
+async function setBasemap(map, basemapId) {
   if (currentBasemap === basemapId) return;
   currentBasemap = basemapId;
   const bm = BASEMAPS[basemapId];
   if (!bm) return;
-  // Captura estado atual dos toggles (mais confiável que getLayoutProperty antes do setStyle)
-  const checkedLayers = new Set();
+
+  const checked = new Set();
   document.querySelectorAll('.gaia-layer-group__check').forEach(cb => {
-    if (cb.checked) {
-      const id = cb.id.replace('toggle-','');
-      checkedLayers.add(id);
-    }
+    if (cb.checked) checked.add(cb.id.replace('toggle-',''));
   });
-  // limpa source caches: setStyle limpa tudo; precisamos reanexar do zero
-  layerModules.forEach((mod, id) => { if (mod && mod.__hooked) mod.__hooked = false; });
+
+  // Reset hooks
+  layerModules.forEach(m => { if (m) m.__hooked = false; });
+
   map.setStyle(bm.style);
-  map.once('style.load', async () => {
-    for (const l of Object.values(LAYERS)) {
-      if (!l.module) continue;
-      const mod = await loadLayerModule(l);
-      if (!mod) continue;
-      try {
-        await mod.register(map);
-        if (mod.onClick && !mod.__hooked) { mod.onClick(map, showFeaturePanel); mod.__hooked = true; }
-      } catch(e){ console.error('reregister', l.id, e); }
-      // visibility seguindo estado UI
-      if (checkedLayers.has(l.id)) mod.show(map); else mod.hide(map);
-      // se modo era pins, reaplica
-      if (layerMode.get(l.id) === 'pins') setLayerMode(map, l.id, 'pins');
-    }
+
+  // Aguarda style estar TOTALMENTE carregado e re-anexa data layers
+  map.once('style.load', () => {
+    setTimeout(async () => {
+      for (const l of Object.values(LAYERS)) {
+        if (!l.module) continue;
+        const mod = await loadLayerModule(l);
+        if (!mod) continue;
+        try {
+          await mod.register(map);
+          if (mod.onClick && !mod.__hooked) { mod.onClick(map, showFeaturePanel); mod.__hooked = true; }
+        } catch (e) { console.error('reregister', l.id, e); }
+        if (checked.has(l.id)) mod.show(map); else mod.hide(map);
+        if (globalPinMode || layerMode.get(l.id) === 'pins') {
+          await setLayerMode(map, l.id, 'pins', false);
+        }
+      }
+    }, 200);
   });
-  // Update active
+
   document.querySelectorAll('.gaia-basemap-btn').forEach(b => {
     b.classList.toggle('is-active', b.dataset.basemap === basemapId);
   });
@@ -87,14 +88,34 @@ function renderBasemapToggle(map) {
   });
 }
 
-// ============== SIDEBAR — sidebar tipo My Maps ==============
-function renderSidebar(map, onToggle, onModeChange, onFeatureClick) {
+// ============== PIN TOGGLE GLOBAL ==============
+function renderPinToggle(map) {
+  const root = document.getElementById('pin-toggle');
+  if (!root) return;
+  root.innerHTML = `
+    <button class="gaia-pin-toggle ${globalPinMode ? 'is-active' : ''}" id="pin-toggle-btn" type="button" title="${globalPinMode ? 'Voltar para polígonos' : 'Ver como pins'}">
+      <span aria-hidden="true">${globalPinMode ? '▦' : '📍'}</span>
+      <span>${globalPinMode ? 'Polígonos' : 'Pins'}</span>
+    </button>`;
+  document.getElementById('pin-toggle-btn').addEventListener('click', async () => {
+    globalPinMode = !globalPinMode;
+    const newMode = globalPinMode ? 'pins' : 'polygons';
+    for (const layerId of Object.keys(LAYERS)) {
+      if (LAYERS[layerId].module) await setLayerMode(map, layerId, newMode, false);
+    }
+    renderPinToggle(map);
+    renderSidebar();
+  });
+}
+
+// ============== SIDEBAR (mais compacto) ==============
+function renderSidebar() {
   const list = document.getElementById('layer-list');
   list.innerHTML = '';
   Object.values(LAYERS).forEach((layer) => {
     const isAvailable = !!layer.module;
     const expanded = layerExpanded.has(layer.id);
-    const mode = layerMode.get(layer.id) || 'polygons';
+    const mode = layerMode.get(layer.id) || (globalPinMode ? 'pins' : 'polygons');
     const count = layer.count || 0;
 
     const li = document.createElement('li');
@@ -115,10 +136,6 @@ function renderSidebar(map, onToggle, onModeChange, onFeatureClick) {
       </div>
       ${isAvailable && expanded ? `
       <div class="gaia-layer-group__body">
-        <div class="gaia-layer-group__modes" role="radiogroup" aria-label="Modo de visualização">
-          <button class="gaia-mode-btn ${mode === 'polygons' ? 'is-active' : ''}" data-id="${layer.id}" data-mode="polygons" type="button">▦ Polígonos</button>
-          <button class="gaia-mode-btn ${mode === 'pins' ? 'is-active' : ''}" data-id="${layer.id}" data-mode="pins" type="button">📍 Pins</button>
-        </div>
         <div class="gaia-layer-group__featurelist" id="features-${layer.id}">
           <input type="search" class="gaia-feature-search" placeholder="Buscar em ${layer.label}..." data-id="${layer.id}" />
           <ul class="gaia-feature-quicklist" id="quicklist-${layer.id}"></ul>
@@ -129,19 +146,17 @@ function renderSidebar(map, onToggle, onModeChange, onFeatureClick) {
     list.appendChild(li);
 
     if (isAvailable) {
-      li.querySelector('.gaia-layer-group__check').addEventListener('change', (e) => onToggle(layer.id, e.target.checked));
+      li.querySelector('.gaia-layer-group__check').addEventListener('change', (e) => onToggleLayer(layer.id, e.target.checked));
       const expandBtn = li.querySelector('.gaia-layer-group__expand');
       if (expandBtn) {
         expandBtn.addEventListener('click', () => {
           if (layerExpanded.has(layer.id)) layerExpanded.delete(layer.id);
           else layerExpanded.add(layer.id);
-          renderSidebar(map, onToggle, onModeChange, onFeatureClick);
-          // Auto-load feature list if expanded
+          renderSidebar();
           if (layerExpanded.has(layer.id)) populateFeatureList(layer.id);
         });
       }
       if (expanded) {
-        li.querySelectorAll('.gaia-mode-btn').forEach(b => b.addEventListener('click', () => onModeChange(layer.id, b.dataset.mode)));
         const search = li.querySelector('.gaia-feature-search');
         if (search) search.addEventListener('input', (e) => filterFeatureList(layer.id, e.target.value));
         populateFeatureList(layer.id);
@@ -158,22 +173,17 @@ async function populateFeatureList(layerId) {
   if (!data) {
     const mod = await loadLayerModule(layer);
     if (!mod) return;
-    // grab from MapLibre source
     try { data = mapInstance.getSource(`src-${layerId}`)?._data; } catch(e){}
     if (!data) return;
     layerData.set(layerId, data);
   }
-  const features = (data.features || []).slice(0, 200); // top 200 most visible
+  const features = (data.features || []).slice(0, 200);
   ul.innerHTML = features.map((f, i) => {
     const name = f.properties[layer.nameField] || f.properties.scientificName || f.properties.id || `Feature ${i}`;
-    return `<li><button class="gaia-feature-item" data-layer="${layerId}" data-idx="${i}" type="button">${name}</button></li>`;
+    return `<li><button class="gaia-feature-item" data-idx="${i}" type="button">${name}</button></li>`;
   }).join('');
   ul.querySelectorAll('.gaia-feature-item').forEach(b => {
-    b.addEventListener('click', () => {
-      const idx = parseInt(b.dataset.idx);
-      const feature = features[idx];
-      flyToFeature(feature, layer);
-    });
+    b.addEventListener('click', () => flyToFeature(features[parseInt(b.dataset.idx)], layer));
   });
 }
 
@@ -193,7 +203,7 @@ function filterFeatureList(layerId, query) {
   const ul = document.getElementById(`quicklist-${layerId}`);
   ul.innerHTML = filtered.map((f, i) => {
     const name = f.properties[layer.nameField] || f.properties.scientificName || `Feature ${i}`;
-    return `<li><button class="gaia-feature-item" data-name="${(name+'').replace(/"/g,'&quot;')}" type="button">${name}</button></li>`;
+    return `<li><button class="gaia-feature-item" type="button">${name}</button></li>`;
   }).join('');
   ul.querySelectorAll('.gaia-feature-item').forEach((b, i) => {
     b.addEventListener('click', () => flyToFeature(filtered[i], layer));
@@ -205,46 +215,30 @@ function flyToFeature(feature, layer) {
   const bbox = computeBbox(feature.geometry);
   if (!bbox) return;
   mapInstance.fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], { padding: 80, duration: 1500, maxZoom: 12 });
-  // Open feature panel
   showFeaturePanel({ layerId: layer.id, label: layer.label, icon: layer.icon, sensitivity: layer.sensitivity, properties: feature.properties, lngLat: { lng: (bbox[0]+bbox[2])/2, lat: (bbox[1]+bbox[3])/2 } });
 }
 
 function computeBbox(geom) {
   let minX=Infinity, minY=Infinity, maxX=-Infinity, maxY=-Infinity;
-  function process(coords) {
-    if (typeof coords[0] === 'number') {
-      const [x,y] = coords;
-      if (x<minX)minX=x; if (y<minY)minY=y; if (x>maxX)maxX=x; if (y>maxY)maxY=y;
-    } else coords.forEach(process);
-  }
-  process(geom.coordinates);
+  function p(c){ if (typeof c[0]==='number'){const[x,y]=c;if(x<minX)minX=x;if(y<minY)minY=y;if(x>maxX)maxX=x;if(y>maxY)maxY=y;} else c.forEach(p); }
+  p(geom.coordinates);
   if (!isFinite(minX)) return null;
   return [minX, minY, maxX, maxY];
 }
+function geomCentroid(geom) { const b = computeBbox(geom); return b ? [(b[0]+b[2])/2, (b[1]+b[3])/2] : null; }
 
-function geomCentroid(geom) {
-  // Approx centroid: average of bbox corners
-  const b = computeBbox(geom);
-  if (!b) return null;
-  return [(b[0]+b[2])/2, (b[1]+b[3])/2];
-}
-
-// ============== PIN MODE ==============
+// ============== PIN MODE PER LAYER ==============
 async function buildPinSource(layerId) {
-  const layer = LAYERS[layerId];
-  const mod = await loadLayerModule(layer);
-  if (!mod) return null;
-  let data = mapInstance.getSource(`src-${layerId}`)?._data;
+  const data = mapInstance.getSource(`src-${layerId}`)?._data;
   if (!data) return null;
-  const fc = { type: 'FeatureCollection', features: data.features.map(f => {
+  return { type: 'FeatureCollection', features: data.features.map(f => {
     const c = geomCentroid(f.geometry);
     if (!c) return null;
     return { type: 'Feature', properties: f.properties, geometry: { type: 'Point', coordinates: c } };
   }).filter(Boolean) };
-  return fc;
 }
 
-async function setLayerMode(map, layerId, mode) {
+async function setLayerMode(map, layerId, mode, rerender = true) {
   layerMode.set(layerId, mode);
   const layer = LAYERS[layerId];
   const fillId = `lyr-${layerId}-fill`;
@@ -253,19 +247,23 @@ async function setLayerMode(map, layerId, mode) {
   const pinSrc = `src-${layerId}-pins`;
   const pinId  = `lyr-${layerId}-pins`;
 
-  const showPolys = (mode === 'polygons');
+  // Verifica se camada está ativa via checkbox
+  const checkbox = document.getElementById(`toggle-${layerId}`);
+  const isOn = checkbox?.checked;
+
+  const showPolys = (mode === 'polygons') && isOn;
   [fillId, lineId, haloId].forEach(id => {
     if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', showPolys ? 'visible' : 'none');
   });
 
-  if (mode === 'pins') {
+  if (mode === 'pins' && isOn) {
     if (!map.getSource(pinSrc)) {
       const data = await buildPinSource(layerId);
       if (data) map.addSource(pinSrc, { type: 'geojson', data });
     }
     if (!map.getLayer(pinId)) {
       map.addLayer({ id: pinId, type: 'circle', source: pinSrc,
-        paint: { 'circle-radius': 6, 'circle-color': layer.color, 'circle-stroke-color': '#fff', 'circle-stroke-width': 2, 'circle-opacity': 0.9 } });
+        paint: { 'circle-radius': 6, 'circle-color': layer.color, 'circle-stroke-color': '#fff', 'circle-stroke-width': 2, 'circle-opacity': 0.92 } });
       map.on('click', pinId, (e) => {
         if (!e.features || !e.features.length) return;
         showFeaturePanel({ layerId, label: layer.label, icon: layer.icon, sensitivity: layer.sensitivity, properties: e.features[0].properties, lngLat: e.lngLat });
@@ -278,8 +276,21 @@ async function setLayerMode(map, layerId, mode) {
   } else if (map.getLayer(pinId)) {
     map.setLayoutProperty(pinId, 'visibility', 'none');
   }
-  // Re-render sidebar to reflect active mode pill
-  renderSidebar(map, _onToggle, _onModeChange, _onFeatureClick);
+  if (rerender) renderSidebar();
+}
+
+function onToggleLayer(layerId, isOn) {
+  const mod = layerModules.get(layerId);
+  if (!mod) return;
+  const mode = globalPinMode ? 'pins' : (layerMode.get(layerId) || 'polygons');
+  if (isOn) {
+    if (mode === 'polygons') mod.show(mapInstance);
+    else setLayerMode(mapInstance, layerId, 'pins', false);
+  } else {
+    mod.hide(mapInstance);
+    const pinId = `lyr-${layerId}-pins`;
+    if (mapInstance.getLayer(pinId)) mapInstance.setLayoutProperty(pinId, 'visibility', 'none');
+  }
 }
 
 // ============== FEATURE PANEL ==============
@@ -329,8 +340,6 @@ function toast(message, ms = 3500) {
   setTimeout(() => el.remove(), ms);
 }
 
-let _onToggle, _onModeChange, _onFeatureClick;
-
 async function bootstrap() {
   document.getElementById('app-name').textContent = APP.name;
   document.getElementById('app-tagline').textContent = APP.tagline;
@@ -346,27 +355,15 @@ async function bootstrap() {
       if (!layer.module) continue;
       const mod = await loadLayerModule(layer);
       if (!mod) continue;
-      try { await mod.register(map); if (mod.onClick) mod.onClick(map, showFeaturePanel); } catch (err) { console.error(err); }
+      try { await mod.register(map); if (mod.onClick) { mod.onClick(map, showFeaturePanel); mod.__hooked = true; } } catch (err) { console.error(err); }
     }
     map.flyTo({ center: [-52.0, -14.0], zoom: 4, duration: 1200 });
     renderBasemapToggle(map);
+    renderPinToggle(map);
     toast('Camadas carregadas · clique em qualquer polígono');
   });
 
-  _onToggle = async (layerId, isOn) => {
-    const mod = layerModules.get(layerId);
-    if (!mod) return;
-    if (isOn) mod.show(map); else mod.hide(map);
-    // Pin layer follows
-    const pinId = `lyr-${layerId}-pins`;
-    if (map.getLayer(pinId) && layerMode.get(layerId) === 'pins') {
-      map.setLayoutProperty(pinId, 'visibility', isOn ? 'visible' : 'none');
-    }
-  };
-  _onModeChange = (layerId, mode) => setLayerMode(map, layerId, mode);
-  _onFeatureClick = (layerId, feature) => flyToFeature(feature, LAYERS[layerId]);
-
-  renderSidebar(map, _onToggle, _onModeChange, _onFeatureClick);
+  renderSidebar();
   document.getElementById('feature-panel-close').addEventListener('click', closeFeaturePanel);
   attachSearch(document.getElementById('search-input'), map, toast);
 }

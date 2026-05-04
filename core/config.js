@@ -85,22 +85,10 @@ const SATELLITE_STYLE = {
     tileSize: 256, maxzoom: 19, attribution: 'Esri · World Imagery (Maxar, Earthstar)' } },
   layers: [{ id: 'sat', type: 'raster', source: 'sat' }],
 };
-const HYBRID_STYLE = {
-  version: 8,
-  sources: {
-    'sat': { type: 'raster', tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'], tileSize: 256, maxzoom: 19, attribution: 'Esri · World Imagery' },
-    'labels': { type: 'raster', tiles: ['https://stamen-tiles-a.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}.png','https://stamen-tiles-b.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}.png','https://stamen-tiles-c.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}.png'], tileSize: 256, maxzoom: 18, attribution: '© Stamen Design / OSM' },
-  },
-  layers: [
-    { id: 'sat', type: 'raster', source: 'sat' },
-    { id: 'labels', type: 'raster', source: 'labels', paint: { 'raster-opacity': 0.9 } },
-  ],
-};
 
 export const BASEMAPS = Object.freeze({
   map:       { id: 'map',       label: 'Mapa',     icon: '🗺️', style: OSM_STYLE },
   satellite: { id: 'satellite', label: 'Satélite', icon: '🛰️', style: SATELLITE_STYLE },
-  hybrid:    { id: 'hybrid',    label: 'Híbrido',  icon: '🌐', style: HYBRID_STYLE },
 });
 
 export const MAP = Object.freeze({

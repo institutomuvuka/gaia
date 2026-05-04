@@ -421,8 +421,8 @@
   border-color: var(--gaia-green-300);
 }
 .gaia-layer-group__head {
-  display: flex; align-items: center; gap: var(--gaia-space-3);
-  padding: var(--gaia-space-3);
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px;
   cursor: pointer;
 }
 .gaia-layer-group__check {
@@ -432,26 +432,26 @@
   flex-shrink: 0;
 }
 .gaia-layer-group__icon {
-  font-size: 22px; line-height: 1;
-  width: 36px; height: 36px;
+  font-size: 16px; line-height: 1;
+  width: 28px; height: 28px;
   display: flex; align-items: center; justify-content: center;
   background: var(--gaia-bg);
-  border-radius: var(--gaia-radius-sm);
+  border-radius: 6px;
   flex-shrink: 0;
 }
 .gaia-layer-group__meta { flex: 1; min-width: 0; }
 .gaia-layer-group__title {
-  font-size: var(--gaia-text-sm);
+  font-size: 13px;
   font-weight: 600;
   color: var(--gaia-ink-900);
   cursor: pointer;
   display: block;
-  line-height: 1.3;
+  line-height: 1.2;
 }
 .gaia-layer-group__sub {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--gaia-ink-500);
-  margin-top: 2px;
+  margin-top: 1px;
 }
 .gaia-layer-group__expand {
   width: 28px; height: 28px;
@@ -475,23 +475,6 @@
   padding: 0 var(--gaia-space-3) var(--gaia-space-3);
   border-top: 1px solid var(--gaia-border);
 }
-.gaia-layer-group__modes {
-  display: flex; gap: 4px;
-  margin: var(--gaia-space-3) 0;
-}
-.gaia-mode-btn {
-  flex: 1;
-  padding: 6px 10px;
-  font-size: 12px; font-weight: 500;
-  background: var(--gaia-ink-100);
-  color: var(--gaia-ink-700);
-  border: 0;
-  border-radius: var(--gaia-radius-sm);
-  cursor: pointer;
-  transition: all var(--gaia-transition);
-}
-.gaia-mode-btn:hover { background: var(--gaia-ink-200); }
-.gaia-mode-btn.is-active { background: var(--gaia-green-700); color: white; }
 
 .gaia-feature-search {
   width: 100%; padding: 8px 12px;
@@ -528,3 +511,47 @@
   .gaia-basemap-toggle { top: 8px; left: 8px; }
   .gaia-basemap-btn { padding: 6px 10px; font-size: 11px; }
 }
+
+
+/* Pin Toggle Global (canto inferior esquerdo do mapa) */
+.gaia-pin-toggle-wrap {
+  position: absolute;
+  bottom: var(--gaia-space-5);
+  left: var(--gaia-space-5);
+  z-index: var(--gaia-z-overlay);
+}
+.gaia-pin-toggle {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--gaia-border);
+  border-radius: var(--gaia-radius-pill);
+  box-shadow: var(--gaia-shadow-md);
+  font-size: var(--gaia-text-sm);
+  font-weight: 500;
+  color: var(--gaia-ink-700);
+  cursor: pointer;
+  transition: all var(--gaia-transition);
+}
+.gaia-pin-toggle:hover { background: white; color: var(--gaia-ink-900); transform: translateY(-1px); box-shadow: var(--gaia-shadow-lg); }
+.gaia-pin-toggle.is-active {
+  background: var(--gaia-green-900); color: white; border-color: var(--gaia-green-900);
+}
+
+/* Esconde a legenda fixa (movida pra dentro do feature-panel quando relevante) */
+.gaia-legend { display: none !important; }
+
+/* Compacta o callout no rodapé do sidebar */
+.gaia-map-sidebar__callout {
+  padding: 12px 14px;
+}
+.gaia-map-sidebar__callout p { font-size: 11px; line-height: 1.4; }
+
+/* Compacta secoes */
+.gaia-map-sidebar__section { padding: 14px 16px; }
+
+/* Body compacto */
+.gaia-layer-group__body { padding: 0 10px 10px; }
+.gaia-tier-mini { margin-top: 8px; font-size: 10px; }
