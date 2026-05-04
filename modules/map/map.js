@@ -39,37 +39,30 @@ function renderTrend(tr) { const [label, color] = TREND_LABELS[tr] || [tr,'#9E9E
 // ============== BASEMAP TOGGLE ==============
 async function setBasemap(map, basemapId) {
   if (currentBasemap === basemapId) return;
-  currentBasemap = basemapId;
   const bm = BASEMAPS[basemapId];
   if (!bm) return;
+  currentBasemap = basemapId;
 
-  const checked = new Set();
-  document.querySelectorAll('.gaia-layer-group__check').forEach(cb => {
-    if (cb.checked) checked.add(cb.id.replace('toggle-',''));
+  // Em vez de setStyle (que limpa data layers), trocamos só o source/layer do basemap
+  // Remove TODOS os layers/sources que começam com 'osm' ou 'sat' (basemaps anteriores)
+  const style = map.getStyle();
+  ['osm-raster','osm','sat'].forEach(id => {
+    if (map.getLayer(id)) map.removeLayer(id);
+    if (map.getSource(id)) map.removeSource(id);
   });
 
-  // Reset hooks (precisa re-anexar onClick após setStyle)
-  hookedLayers.clear();
-
-  map.setStyle(bm.style);
-
-  // Aguarda style estar TOTALMENTE carregado e re-anexa data layers
-  map.once('style.load', () => {
-    setTimeout(async () => {
-      for (const l of Object.values(LAYERS)) {
-        if (!l.module) continue;
-        const mod = await loadLayerModule(l);
-        if (!mod) continue;
-        try {
-          await mod.register(map);
-          if (mod.onClick && !hookedLayers.has(l.id)) { mod.onClick(map, showFeaturePanel); hookedLayers.add(l.id); }
-        } catch (e) { console.error('reregister', l.id, e); }
-        if (checked.has(l.id)) mod.show(map); else mod.hide(map);
-        if (globalPinMode || layerMode.get(l.id) === 'pins') {
-          await setLayerMode(map, l.id, 'pins', false);
-        }
-      }
-    }, 200);
+  // Adiciona o novo basemap source + layer
+  const newStyle = bm.style;
+  Object.entries(newStyle.sources || {}).forEach(([id, src]) => {
+    if (!map.getSource(id)) map.addSource(id, src);
+  });
+  // beforeId = primeiro data layer pra basemap ficar no fundo
+  let firstDataLayer = null;
+  for (const lid of map.getStyle().layers.map(l => l.id)) {
+    if (lid.startsWith('lyr-')) { firstDataLayer = lid; break; }
+  }
+  (newStyle.layers || []).forEach(l => {
+    if (!map.getLayer(l.id)) map.addLayer(l, firstDataLayer || undefined);
   });
 
   document.querySelectorAll('.gaia-basemap-btn').forEach(b => {
