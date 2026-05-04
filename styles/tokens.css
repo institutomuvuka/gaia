@@ -1,83 +1,132 @@
 /* ============================================================
-   GAIA — Design tokens
-   Princípio: cada cor, fonte ou espaçamento usado na plataforma
-   nasce aqui. Mudou aqui, muda em todo lugar.
+   GAIA — Design Tokens
+   Sistema visual: tipografia premium (Fraunces serif para títulos +
+   Inter sans para corpo) + paleta inspirada em biomas brasileiros.
    ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700&display=swap');
 
 :root {
-  /* Cores institucionais (Muvuka) */
-  --gaia-green-900: #0F3D2E;   /* mata profunda */
-  --gaia-green-700: #1F6F4A;   /* primário */
-  --gaia-green-500: #2F9362;   /* primário claro */
-  --gaia-green-300: #8FB339;   /* acento (cerrado) */
-  --gaia-green-100: #E8F1E8;   /* fundo claro */
+  /* ====== PALETA ====== */
+  /* Verde principal — profundidade da Mata Atlântica */
+  --gaia-green-950: #0A2818;
+  --gaia-green-900: #0F3D2E;
+  --gaia-green-800: #145039;
+  --gaia-green-700: #166F50;   /* primário */
+  --gaia-green-600: #1F8B65;
+  --gaia-green-500: #2EA67A;   /* primário claro */
+  --gaia-green-400: #6BC79D;
+  --gaia-green-300: #A5DFC1;
+  --gaia-green-200: #D0EDDB;
+  --gaia-green-100: #E8F5EE;
+  --gaia-green-50:  #F4FAF6;
 
-  --gaia-water-700: #1A5F8A;   /* água — usado em hidrografia/nascentes */
+  /* Acento — âmbar dos cerrados, cor de ação */
+  --gaia-amber-700: #B45309;
+  --gaia-amber-600: #D97706;   /* acento */
+  --gaia-amber-500: #F59E0B;
+  --gaia-amber-400: #FBBF24;
+  --gaia-amber-100: #FEF3C7;
+
+  /* Água — azul dos rios e nascentes */
+  --gaia-water-800: #134E5E;
+  --gaia-water-700: #1A5F8A;
   --gaia-water-500: #2F8FBE;
-  --gaia-water-100: #E4F1F8;
+  --gaia-water-300: #93C5DD;
+  --gaia-water-100: #DBEEF7;
 
-  --gaia-earth-700: #8B5A2B;   /* solo / terras */
+  /* Terra — castanhos quilombolas e quentes */
+  --gaia-earth-800: #5A3818;
+  --gaia-earth-700: #8B5A2B;
   --gaia-earth-500: #C68B47;
   --gaia-earth-100: #F6EBDB;
 
-  --gaia-warn-500:  #D97706;   /* alertas (desmatamento) */
-  --gaia-danger-500: #B91C1C;  /* dado restrito / risco */
-  --gaia-success-500: #059669;
+  /* Sinal */
+  --gaia-warn-500:    #D97706;
+  --gaia-danger-500:  #B91C1C;
+  --gaia-success-500: #15803D;
 
-  --gaia-ink-900: #111827;
-  --gaia-ink-700: #1F2937;
-  --gaia-ink-500: #4B5563;
-  --gaia-ink-300: #9CA3AF;
-  --gaia-ink-100: #E5E7EB;
-  --gaia-bg:      #FAFAF7;
+  /* Neutros — paleta greige sofisticada */
+  --gaia-ink-950: #0A0F0D;
+  --gaia-ink-900: #111714;
+  --gaia-ink-800: #1A2420;
+  --gaia-ink-700: #2A3633;
+  --gaia-ink-600: #475569;
+  --gaia-ink-500: #64748B;
+  --gaia-ink-400: #94A3B8;
+  --gaia-ink-300: #CBD5E1;
+  --gaia-ink-200: #E2E8F0;
+  --gaia-ink-100: #F1F5F9;
+  --gaia-ink-50:  #F8FAFC;
+
+  --gaia-bg:      #FBFAF6;     /* greige claro elegante */
   --gaia-card:    #FFFFFF;
   --gaia-border:  #E5E7EB;
 
-  /* Tipografia */
-  --gaia-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --gaia-font-mono: 'JetBrains Mono', 'Consolas', monospace;
+  /* Tier de sensibilidade */
+  --gaia-tier-public:     var(--gaia-success-500);
+  --gaia-tier-aggregated: var(--gaia-amber-600);
+  --gaia-tier-restricted: var(--gaia-danger-500);
 
+  /* ====== TIPOGRAFIA ====== */
+  --gaia-font-sans:   'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --gaia-font-serif:  'Fraunces', Georgia, 'Times New Roman', serif;
+  --gaia-font-mono:   'JetBrains Mono', 'Consolas', monospace;
+
+  /* Escala fluida (clamp para responsividade nativa) */
   --gaia-text-xs:   12px;
   --gaia-text-sm:   14px;
   --gaia-text-base: 16px;
   --gaia-text-lg:   18px;
-  --gaia-text-xl:   22px;
-  --gaia-text-2xl:  28px;
-  --gaia-text-3xl:  36px;
-  --gaia-text-4xl:  48px;
+  --gaia-text-xl:   clamp(20px, 1.5vw, 22px);
+  --gaia-text-2xl:  clamp(24px, 2vw,   28px);
+  --gaia-text-3xl:  clamp(28px, 3vw,   36px);
+  --gaia-text-4xl:  clamp(36px, 5vw,   56px);
+  --gaia-text-5xl:  clamp(44px, 7vw,   80px);
 
-  --gaia-line-tight:  1.2;
-  --gaia-line-normal: 1.5;
-  --gaia-line-loose:  1.7;
+  --gaia-line-tight:  1.1;
+  --gaia-line-snug:   1.3;
+  --gaia-line-normal: 1.55;
+  --gaia-line-loose:  1.75;
 
-  /* Espaçamentos */
-  --gaia-space-1: 4px;
-  --gaia-space-2: 8px;
-  --gaia-space-3: 12px;
-  --gaia-space-4: 16px;
-  --gaia-space-6: 24px;
-  --gaia-space-8: 32px;
+  --gaia-track-tight:  -0.03em;
+  --gaia-track-snug:   -0.015em;
+  --gaia-track-normal:  0;
+
+  /* ====== ESPAÇOS ====== */
+  --gaia-space-1:  4px;
+  --gaia-space-2:  8px;
+  --gaia-space-3:  12px;
+  --gaia-space-4:  16px;
+  --gaia-space-5:  20px;
+  --gaia-space-6:  24px;
+  --gaia-space-8:  32px;
+  --gaia-space-10: 40px;
   --gaia-space-12: 48px;
   --gaia-space-16: 64px;
+  --gaia-space-20: 80px;
+  --gaia-space-24: 96px;
 
-  /* Bordas e sombras */
-  --gaia-radius-sm: 4px;
-  --gaia-radius-md: 8px;
-  --gaia-radius-lg: 12px;
+  /* ====== RAIO ====== */
+  --gaia-radius-xs:   4px;
+  --gaia-radius-sm:   8px;
+  --gaia-radius-md:   12px;
+  --gaia-radius-lg:   16px;
+  --gaia-radius-xl:   24px;
   --gaia-radius-pill: 999px;
 
-  --gaia-shadow-sm: 0 1px 2px rgba(15, 61, 46, 0.04);
-  --gaia-shadow-md: 0 4px 12px rgba(15, 61, 46, 0.08);
-  --gaia-shadow-lg: 0 12px 32px rgba(15, 61, 46, 0.12);
-
-  /* Tier de sensibilidade — referência visual da política de dados */
-  --gaia-tier-public:    var(--gaia-success-500);
-  --gaia-tier-aggregated: var(--gaia-warn-500);
-  --gaia-tier-restricted: var(--gaia-danger-500);
+  /* ====== SOMBRAS — refinadas com tons do tema ====== */
+  --gaia-shadow-xs: 0 1px 2px rgba(15, 61, 46, 0.04);
+  --gaia-shadow-sm: 0 2px 4px rgba(15, 61, 46, 0.06), 0 1px 2px rgba(15, 61, 46, 0.04);
+  --gaia-shadow-md: 0 8px 24px rgba(15, 61, 46, 0.08), 0 2px 4px rgba(15, 61, 46, 0.04);
+  --gaia-shadow-lg: 0 24px 48px rgba(15, 61, 46, 0.12), 0 8px 16px rgba(15, 61, 46, 0.06);
+  --gaia-shadow-xl: 0 32px 64px rgba(15, 61, 46, 0.16);
 
   /* Z-index */
   --gaia-z-base:    1;
   --gaia-z-overlay: 10;
   --gaia-z-modal:   100;
   --gaia-z-toast:   1000;
+
+  /* Transição padrão */
+  --gaia-transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }

@@ -3,9 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="GAIA — plataforma open source que mapeia territórios, povos tradicionais e biodiversidade brasileiros para conservação e restauração." />
+  <meta name="description" content="GAIA — atlas geoespacial open source da conservação e restauração brasileira. Terras indígenas, quilombolas, unidades de conservação, espécies ameaçadas — em um mapa só." />
+  <meta property="og:title" content="GAIA — Mapa vivo da conservação brasileira" />
+  <meta property="og:description" content="Atlas geoespacial open source agregando dados oficiais de conservação e restauração no Brasil." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://gaia.muvuka.org" />
   <title>GAIA — Mapa vivo da conservação e restauração brasileira</title>
-
   <link rel="stylesheet" href="./styles/tokens.css" />
   <link rel="stylesheet" href="./styles/base.css" />
   <link rel="stylesheet" href="./styles/components.css" />
@@ -14,152 +17,201 @@
   <a href="#main" class="skip-link">Pular para o conteúdo</a>
 
   <header class="gaia-header" role="banner">
-    <a href="./index.html" class="gaia-header__brand" style="text-decoration: none; display: flex; align-items: center; gap: var(--gaia-space-3);">
+    <a href="./index.html" class="gaia-header__brand" style="text-decoration: none;">
       <span class="gaia-header__brand-mark" aria-hidden="true">G</span>
       <span>GAIA</span>
-      <span style="font-size: var(--gaia-text-xs); font-weight: 500; color: var(--gaia-warn-500); background: rgba(217, 119, 6, 0.1); padding: 2px 10px; border-radius: var(--gaia-radius-pill); text-transform: uppercase; letter-spacing: 0.05em;">MVP em construção pública</span>
+      <span class="gaia-pill gaia-pill--alpha"><span class="gaia-pill__dot"></span>MVP</span>
     </a>
     <nav aria-label="Navegação principal">
       <ul class="gaia-header__nav">
         <li><a href="./modules/map/map.html">Mapa</a></li>
-        <li><a href="#sobre">Sobre</a></li>
         <li><a href="#camadas">Camadas</a></li>
         <li><a href="./modules/governance/fontes.html">Fontes</a></li>
         <li><a href="#governanca">Governança</a></li>
         <li><a href="#contribuir">Contribuir</a></li>
       </ul>
     </nav>
+    <a href="./modules/map/map.html" class="gaia-btn gaia-btn--primary" style="padding: 10px 20px;">Abrir o mapa →</a>
   </header>
 
   <main id="main">
 
+    <!-- HERO -->
     <section class="gaia-hero">
       <div class="gaia-container">
-        <h1 class="gaia-hero__title">
-          Um <em>mapa vivo</em> da conservação<br />
-          e restauração brasileira.
-        </h1>
-        <p class="gaia-hero__lead">
-          GAIA reúne em um único atlas público as terras indígenas, os territórios quilombolas, os assentamentos, as unidades de conservação, as bacias, as nascentes e as espécies ameaçadas do Brasil — alimentado por dados oficiais, por pesquisas e por contribuições das próprias comunidades. Open source, gratuito, LGPD by design.
-        </p>
-        <div class="gaia-hero__cta">
-          <a href="./modules/map/map.html" class="gaia-btn gaia-btn--primary">
-            Abrir o mapa →
-          </a>
-          <a href="#sobre" class="gaia-btn gaia-btn--secondary">
-            Como funciona
-          </a>
+        <div class="gaia-hero__content">
+          <span class="gaia-hero__eyebrow">Instituto Muvuka · Open source</span>
+          <h1 class="gaia-hero__title">
+            Um <em>mapa vivo</em> da conservação<br />
+            e restauração brasileira.
+          </h1>
+          <p class="gaia-hero__lead">
+            GAIA reúne em um único atlas público as terras indígenas, os territórios quilombolas, os assentamentos, as unidades de conservação, as bacias, as nascentes e as espécies ameaçadas do Brasil — alimentado por dados oficiais e por contribuições das próprias comunidades.
+          </p>
+          <div class="gaia-hero__cta">
+            <a href="./modules/map/map.html" class="gaia-btn gaia-btn--primary">Abrir o mapa →</a>
+            <a href="#sobre" class="gaia-btn gaia-btn--secondary">Como funciona</a>
+          </div>
+
+          <!-- Stats -->
+          <div class="gaia-stats">
+            <div class="gaia-stat">
+              <span class="gaia-stat__num">2.741</span>
+              <div class="gaia-stat__label">Unidades de Conservação</div>
+            </div>
+            <div class="gaia-stat">
+              <span class="gaia-stat__num">655</span>
+              <div class="gaia-stat__label">Terras Indígenas</div>
+            </div>
+            <div class="gaia-stat">
+              <span class="gaia-stat__num">94</span>
+              <div class="gaia-stat__label">Quilombolas (parcial)</div>
+            </div>
+            <div class="gaia-stat">
+              <span class="gaia-stat__num">25</span>
+              <div class="gaia-stat__label">Espécies ameaçadas</div>
+            </div>
+            <div class="gaia-stat">
+              <span class="gaia-stat__num">15</span>
+              <div class="gaia-stat__label">Polígonos oficiais IUCN</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="sobre" class="gaia-container" style="padding: var(--gaia-space-16) 0;">
-      <h2>Por que o GAIA existe</h2>
-      <p style="font-size: var(--gaia-text-lg); max-width: 720px;">
-        Quem precisa proteger um território — uma comunidade tradicional, um pesquisador, um gestor público, um proprietário rural que quer regularizar sua reserva legal — hoje precisa cruzar dezenas de bases de dados desconectadas. Quem quer destruir esse território, em geral, não tem essa dificuldade. GAIA inverte essa assimetria: dá às pessoas que cuidam o mesmo poder de mapa que sempre teve quem destrói.
-      </p>
-    </section>
-
-    <section id="camadas" class="gaia-container" style="padding-bottom: var(--gaia-space-16);">
-      <h2>Camadas do MVP</h2>
-      <p style="max-width: 720px;">Sete camadas iniciais, alimentadas por fontes oficiais e enriquecidas por contribuições colaborativas com curadoria por IA e por especialistas humanos.</p>
-
-      <div class="gaia-grid" style="margin-top: var(--gaia-space-8);">
-
-        <article class="gaia-card">
-          <div class="gaia-feature__icon">🌳</div>
-          <div class="gaia-feature__title">Unidades de Conservação</div>
-          <div class="gaia-feature__desc">Federais e estaduais, vindas do CNUC e do ICMBio.</div>
-          <div style="margin-top: var(--gaia-space-3);"><span class="gaia-tier gaia-tier--public"><span class="gaia-tier__dot"></span>Público</span></div>
-        </article>
-
-        <article class="gaia-card">
-          <div class="gaia-feature__icon">🪶</div>
-          <div class="gaia-feature__title">Terras Indígenas</div>
-          <div class="gaia-feature__desc">Em diferentes estágios — declaradas, homologadas, regularizadas.</div>
-          <div style="margin-top: var(--gaia-space-3);"><span class="gaia-tier gaia-tier--public"><span class="gaia-tier__dot"></span>Público</span></div>
-        </article>
-
-        <article class="gaia-card">
-          <div class="gaia-feature__icon">✊🏿</div>
-          <div class="gaia-feature__title">Territórios Quilombolas</div>
-          <div class="gaia-feature__desc">Reconhecidos por INCRA, Palmares e CONAC.</div>
-          <div style="margin-top: var(--gaia-space-3);"><span class="gaia-tier gaia-tier--public"><span class="gaia-tier__dot"></span>Público</span></div>
-        </article>
-
-        <article class="gaia-card">
-          <div class="gaia-feature__icon">💧</div>
-          <div class="gaia-feature__title">Nascentes</div>
-          <div class="gaia-feature__desc">Rios, riachos e nascentes de água. Dado sensível por padrão.</div>
-          <div style="margin-top: var(--gaia-space-3);"><span class="gaia-tier gaia-tier--aggregated"><span class="gaia-tier__dot"></span>Agregado</span></div>
-        </article>
-
-        <article class="gaia-card">
-          <div class="gaia-feature__icon">🦋</div>
-          <div class="gaia-feature__title">Espécies Ameaçadas</div>
-          <div class="gaia-feature__desc">Fauna e flora — IUCN Red List + lista oficial ICMBio.</div>
-          <div style="margin-top: var(--gaia-space-3);"><span class="gaia-tier gaia-tier--aggregated"><span class="gaia-tier__dot"></span>Agregado</span></div>
-        </article>
-
-        <article class="gaia-card">
-          <div class="gaia-feature__icon">🌎</div>
-          <div class="gaia-feature__title">Cobertura e uso da terra</div>
-          <div class="gaia-feature__desc">Coleção mais recente do MapBiomas para o Brasil.</div>
-          <div style="margin-top: var(--gaia-space-3);"><span class="gaia-tier gaia-tier--public"><span class="gaia-tier__dot"></span>Público</span></div>
-        </article>
-
-      </div>
-    </section>
-
-    <section id="governanca" style="background: var(--gaia-green-100); padding: var(--gaia-space-16) 0;">
+    <!-- POR QUE EXISTE -->
+    <section id="sobre" class="gaia-section">
       <div class="gaia-container">
-        <h2>Como decidimos o que é público</h2>
-        <p style="max-width: 760px; font-size: var(--gaia-text-lg);">
-          GAIA assume um trade-off honesto: dado público protege e expõe ao mesmo tempo. Por isso toda camada tem um <strong>tier de sensibilidade</strong> — público, agregado ou restrito — e a política que define essas categorias é ela mesma um documento aberto, criticado pela comunidade, filtrado por um agente de IA e revisado mensalmente por um comitê de pessoas-referência.
+        <span class="gaia-section__eyebrow">Por que o GAIA existe</span>
+        <h2 class="gaia-section__title">A assimetria de mapa que queremos quebrar.</h2>
+        <p class="gaia-section__lead" style="max-width: 760px;">
+          Quem precisa proteger um território — uma comunidade tradicional, um pesquisador, um gestor público, um proprietário rural que quer regularizar sua reserva legal — hoje precisa cruzar dezenas de bases de dados desconectadas. Quem quer destruir esse território, em geral, não tem essa dificuldade. <strong style="color: var(--gaia-ink-900);">GAIA inverte essa assimetria</strong>: dá às pessoas que cuidam o mesmo poder de mapa que sempre teve quem destrói.
         </p>
-        <div style="display: flex; gap: var(--gaia-space-3); margin-top: var(--gaia-space-6); flex-wrap: wrap;">
-          <a href="./policies/manifesto.md" class="gaia-btn gaia-btn--primary">Ler o manifesto</a>
-          <a href="./policies/dados-sensiveis.md" class="gaia-btn gaia-btn--secondary">Política de dados sensíveis</a>
+      </div>
+    </section>
+
+    <!-- CAMADAS -->
+    <section id="camadas" class="gaia-section" style="background: var(--gaia-green-50);">
+      <div class="gaia-container">
+        <span class="gaia-section__eyebrow">As camadas do MVP</span>
+        <h2 class="gaia-section__title">Sete camadas alimentadas por dados oficiais.</h2>
+        <p class="gaia-section__lead">Cada camada é independente, com fonte rastreável até a base original e tier de sensibilidade declarado.</p>
+
+        <div class="gaia-grid">
+          <article class="gaia-feature" style="--gaia-feature-color: #166F50;">
+            <div class="gaia-feature__icon">🌳</div>
+            <h3 class="gaia-feature__title">Unidades de Conservação</h3>
+            <p class="gaia-feature__desc">2.741 UCs ativas (federais, estaduais e municipais) do CNUC 2024.02.</p>
+            <span class="gaia-tier gaia-tier--public"><span class="gaia-tier__dot"></span>Público</span>
+          </article>
+          <article class="gaia-feature" style="--gaia-feature-color: #8B5A2B;">
+            <div class="gaia-feature__icon">🪶</div>
+            <h3 class="gaia-feature__title">Terras Indígenas</h3>
+            <p class="gaia-feature__desc">655 TIs do GeoServer FUNAI em diferentes estágios de regularização.</p>
+            <span class="gaia-tier gaia-tier--public"><span class="gaia-tier__dot"></span>Público</span>
+          </article>
+          <article class="gaia-feature" style="--gaia-feature-color: #5A3818;">
+            <div class="gaia-feature__icon">✊🏿</div>
+            <h3 class="gaia-feature__title">Territórios Quilombolas</h3>
+            <p class="gaia-feature__desc">94 territórios do Semi-Árido (INSA/INCRA). Cobertura nacional pendente.</p>
+            <span class="gaia-tier gaia-tier--public"><span class="gaia-tier__dot"></span>Público</span>
+          </article>
+          <article class="gaia-feature" style="--gaia-feature-color: #2F8FBE;">
+            <div class="gaia-feature__icon">💧</div>
+            <h3 class="gaia-feature__title">Nascentes</h3>
+            <p class="gaia-feature__desc">Rios, riachos e nascentes. Dado sensível por padrão — política dedicada.</p>
+            <span class="gaia-tier gaia-tier--aggregated"><span class="gaia-tier__dot"></span>Agregado</span>
+          </article>
+          <article class="gaia-feature" style="--gaia-feature-color: #B45309;">
+            <div class="gaia-feature__icon">🦋</div>
+            <h3 class="gaia-feature__title">Espécies Ameaçadas</h3>
+            <p class="gaia-feature__desc">25 espécies-bandeira coloridas pela categoria IUCN. 15 com polígono oficial.</p>
+            <span class="gaia-tier gaia-tier--aggregated"><span class="gaia-tier__dot"></span>Agregado</span>
+          </article>
+          <article class="gaia-feature" style="--gaia-feature-color: #6BC79D;">
+            <div class="gaia-feature__icon">🌎</div>
+            <h3 class="gaia-feature__title">Cobertura e uso da terra</h3>
+            <p class="gaia-feature__desc">Coleção mais recente do MapBiomas, integração em curso.</p>
+            <span class="gaia-tier gaia-tier--public"><span class="gaia-tier__dot"></span>Público</span>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="contribuir" class="gaia-container" style="padding: var(--gaia-space-16) 0;">
-      <h2>Como contribuir</h2>
-      <p style="max-width: 720px;">
-        Pesquisadores, comunidades, ONGs e proprietários rurais poderão contribuir com dados primários. A primeira fase está focada em consolidar dados oficiais e abrir o código. A trilha de contribuição colaborativa entra em produção na segunda fase.
-      </p>
-      <a href="https://github.com/institutomuvuka/gaia" class="gaia-btn gaia-btn--primary" target="_blank" rel="noopener">Ver no GitHub →</a>
+    <!-- MANIFESTO -->
+    <section id="governanca" class="gaia-manifesto">
+      <div class="gaia-container">
+        <span class="gaia-section__eyebrow" style="color: var(--gaia-amber-400);">Governança aberta</span>
+        <h2 class="gaia-section__title" style="color: white; max-width: 820px;">Como decidimos o que é público.</h2>
+        <p style="font-size: var(--gaia-text-lg); max-width: 760px; line-height: var(--gaia-line-loose); color: var(--gaia-green-200);">
+          GAIA assume um trade-off honesto: dado público protege e expõe ao mesmo tempo. Por isso toda camada tem um <strong style="color: white;">tier de sensibilidade</strong> — público, agregado ou restrito — e a política que define essas categorias é ela mesma um documento aberto, criticado pela comunidade, filtrado por um agente de IA e revisado mensalmente por um comitê de pessoas-referência.
+        </p>
+        <div style="display: flex; gap: var(--gaia-space-4); margin-top: var(--gaia-space-8); flex-wrap: wrap;">
+          <a href="./policies/manifesto.md" class="gaia-btn gaia-btn--primary" style="background: var(--gaia-amber-600); color: white;">Ler o manifesto →</a>
+          <a href="./policies/dados-sensiveis.md" class="gaia-btn gaia-btn--secondary" style="background: transparent; color: white; border-color: rgba(255,255,255,0.3);">Política de dados sensíveis</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTRIBUIR -->
+    <section id="contribuir" class="gaia-section">
+      <div class="gaia-container">
+        <span class="gaia-section__eyebrow">Contribuir</span>
+        <h2 class="gaia-section__title">Construído em código aberto, em público.</h2>
+        <p class="gaia-section__lead">
+          Pesquisadores, comunidades, ONGs e proprietários rurais poderão contribuir com dados primários nas próximas fases. Por enquanto, o convite é para auditar, criticar e sugerir melhorias no código e na política.
+        </p>
+        <div style="display: flex; gap: var(--gaia-space-4); margin-top: var(--gaia-space-8); flex-wrap: wrap;">
+          <a href="https://github.com/institutomuvuka/gaia" class="gaia-btn gaia-btn--primary" target="_blank" rel="noopener">Ver no GitHub →</a>
+          <a href="mailto:gaia@muvuka.org" class="gaia-btn gaia-btn--secondary">gaia@muvuka.org</a>
+        </div>
+      </div>
     </section>
 
   </main>
 
   <footer class="gaia-footer" role="contentinfo">
-    <div class="gaia-container gaia-footer__grid">
-      <div>
-        <div class="gaia-header__brand" style="color: white; margin-bottom: var(--gaia-space-3);">
-          <span class="gaia-header__brand-mark" style="background: white; color: var(--gaia-green-900);" aria-hidden="true">G</span>
-          GAIA
+    <div class="gaia-container">
+      <div class="gaia-footer__grid">
+        <div>
+          <div class="gaia-header__brand" style="color: white; margin-bottom: var(--gaia-space-4);">
+            <span class="gaia-header__brand-mark" aria-hidden="true">G</span>
+            <span>GAIA</span>
+          </div>
+          <p style="color: var(--gaia-ink-400); font-size: var(--gaia-text-sm); max-width: 360px; line-height: var(--gaia-line-loose);">
+            Atlas geoespacial open source para conservação e restauração no Brasil. Iniciativa do Instituto Muvuka, licenciada sob AGPL-3.0.
+          </p>
         </div>
-        <p style="color: var(--gaia-green-100); font-size: var(--gaia-text-sm); max-width: 320px;">
-          Uma iniciativa open source do Instituto Muvuka. Licenciada sob AGPL-3.0.
-        </p>
+        <div>
+          <h4>Plataforma</h4>
+          <ul>
+            <li><a href="./modules/map/map.html">Mapa interativo</a></li>
+            <li><a href="#camadas">Camadas de dados</a></li>
+            <li><a href="./modules/governance/fontes.html">Fontes & cross-check</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Governança</h4>
+          <ul>
+            <li><a href="./policies/manifesto.md">Manifesto</a></li>
+            <li><a href="./policies/dados-sensiveis.md">Dados sensíveis</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Comunidade</h4>
+          <ul>
+            <li><a href="https://github.com/institutomuvuka/gaia" target="_blank" rel="noopener">GitHub ↗</a></li>
+            <li><a href="mailto:gaia@muvuka.org">Email</a></li>
+          </ul>
+        </div>
       </div>
-      <div>
-        <h4>Plataforma</h4>
-        <ul>
-          <li><a href="./modules/map/map.html">Mapa</a></li>
-          <li><a href="#camadas">Camadas</a></li>
-        </ul>
+      <div class="gaia-footer__legal">
+        <span>© 2026 Instituto Muvuka · Software livre AGPL-3.0</span>
+        <span>Dados seguem as licenças de cada fonte original</span>
       </div>
-      <div>
-        <h4>Governança</h4>
-        <ul>
-          <li><a href="./policies/manifesto.md">Manifesto</a></li>
-          <li><a href="./policies/dados-sensiveis.md">Dados sensíveis</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Comunidade</h4>
-        <ul>
-          <
+    </div>
+  </footer>
+
+</body>
+</html>

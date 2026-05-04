@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="description" content="GAIA — mapa interativo da conservação e restauração brasileira." />
   <title>Mapa — GAIA</title>
-
   <link rel="stylesheet" href="../../styles/tokens.css" />
   <link rel="stylesheet" href="../../styles/base.css" />
   <link rel="stylesheet" href="../../styles/components.css" />
   <link rel="stylesheet" href="./map.css" />
-
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.5.0/dist/maplibre-gl.css" />
   <script src="https://unpkg.com/maplibre-gl@4.5.0/dist/maplibre-gl.js"></script>
 </head>
@@ -18,17 +16,17 @@
   <a href="#map" class="skip-link">Pular para o mapa</a>
 
   <main class="gaia-map-app" role="main">
-
     <header class="gaia-map-header" role="banner">
-      <div class="gaia-map-header__brand">
+      <a href="../../index.html" class="gaia-map-header__brand">
         <span class="gaia-map-header__brand-mark" aria-hidden="true">G</span>
         <div>
           <div id="app-name">GAIA</div>
-          <div id="app-tagline" style="font-size: var(--gaia-text-xs); color: var(--gaia-ink-500); font-weight: 400;"></div>
+          <div id="app-tagline" style="font-size: 11px; color: var(--gaia-ink-500); font-weight: 400; font-family: var(--gaia-font-sans);"></div>
         </div>
-      </div>
+        <span class="gaia-map-header__pill">MVP</span>
+      </a>
       <nav aria-label="Navegação principal">
-        <a href="../../index.html" class="gaia-btn gaia-btn--secondary">← Voltar à página inicial</a>
+        <a href="../../index.html" class="gaia-btn gaia-btn--ghost">← Voltar</a>
       </nav>
     </header>
 
@@ -37,12 +35,7 @@
         <h2 class="gaia-map-sidebar__title">Buscar</h2>
         <div class="gaia-search">
           <label for="search-input" class="sr-only">Buscar município</label>
-          <input
-            type="search"
-            id="search-input"
-            placeholder="Buscar município..."
-            autocomplete="off"
-          />
+          <input type="search" id="search-input" placeholder="Buscar município..." autocomplete="off" />
         </div>
       </section>
 
@@ -51,30 +44,38 @@
         <ul class="gaia-layer-list" id="layer-list" role="list"></ul>
       </section>
 
-      <section class="gaia-map-sidebar__section" style="background: var(--gaia-green-100);">
-        <h2 class="gaia-map-sidebar__title">Política de dados</h2>
-        <p style="font-size: var(--gaia-text-xs); color: var(--gaia-ink-700); margin: 0 0 var(--gaia-space-3);">
-          Camadas marcadas como agregadas têm geometria reduzida a célula de 1 km. Restritas dependem de verificação de custódia.
+      <section class="gaia-map-sidebar__callout">
+        <p>
+          Camadas marcadas como <strong>agregadas</strong> têm geometria reduzida a célula de 1 km. Restritas dependem de verificação de custódia.
         </p>
-        <a href="../../policies/dados-sensiveis.md" style="font-size: var(--gaia-text-xs); font-weight: 600;" target="_blank" rel="noopener">Ler a política →</a>
+        <a href="../../policies/dados-sensiveis.md" target="_blank" rel="noopener">Ler a política completa →</a>
       </section>
     </aside>
 
     <div class="gaia-map-canvas">
       <div id="map" role="application" aria-label="Mapa interativo do GAIA"></div>
 
+      <!-- Legenda IUCN -->
+      <div class="gaia-legend" id="legend">
+        <div class="gaia-legend__title">Categoria IUCN</div>
+        <div class="gaia-legend__row"><span class="gaia-legend__swatch" style="background:#B71C1C30; border-color:#B71C1C"></span> CR — Criticamente em Perigo</div>
+        <div class="gaia-legend__row"><span class="gaia-legend__swatch" style="background:#E6510030; border-color:#E65100"></span> EN — Em Perigo</div>
+        <div class="gaia-legend__row"><span class="gaia-legend__swatch" style="background:#F9A82530; border-color:#F9A825"></span> VU — Vulnerável</div>
+        <div class="gaia-legend__row"><span class="gaia-legend__swatch" style="background:#9E9D2430; border-color:#9E9D24"></span> NT — Quase Ameaçada</div>
+        <div class="gaia-legend__row"><span class="gaia-legend__swatch" style="background:#388E3C30; border-color:#388E3C"></span> LC — Pouco Preocupante</div>
+      </div>
+
       <aside class="gaia-feature-panel" id="feature-panel" aria-live="polite">
         <header class="gaia-feature-panel__header">
-          <div class="gaia-feature-panel__title" id="feature-panel-title"></div>
+          <div class="gaia-feature-panel__title-block">
+            <div class="gaia-feature-panel__category" id="feature-panel-title"></div>
+            <div class="gaia-feature-panel__name" id="feature-panel-name"></div>
+          </div>
           <button class="gaia-feature-panel__close" id="feature-panel-close" aria-label="Fechar painel">×</button>
         </header>
-        <div class="gaia-feature-panel__body">
-          <div class="gaia-feature-panel__name" id="feature-panel-name"></div>
-          <div id="feature-panel-body"></div>
-        </div>
+        <div class="gaia-feature-panel__body" id="feature-panel-body"></div>
       </aside>
     </div>
-
   </main>
 
   <script type="module" src="./map.js"></script>
