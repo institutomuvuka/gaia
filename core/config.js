@@ -33,12 +33,12 @@ export const LAYERS = Object.freeze({
   },
   'quilombola-territories': {
     id: 'quilombola-territories', label: 'Territórios Quilombolas', icon: '✊🏿',
-    description: '94 territórios do Semi-Árido (INSA/INCRA). Cobertura nacional pendente.',
+    description: '427 territórios oficiais do INCRA Sigef (nacional, 16+ estados).',
     source: { origin: 'INSA / INCRA', url: 'https://www.gov.br/insa/pt-br/centrais-de-conteudo/mapas',
       reference: 'Quilombos-SAB-INCRA — 2020-02-07', lastFetched: '2026-04-30', ingestionStatus: 'partial' },
     sensitivity: 'public', color: '#8B5A2B', visibleByDefault: false,
     module: '../layers/quilombolas.js',
-    nameField: 'name', count: 94,
+    nameField: 'name', count: 427,
   },
   'nascentes': {
     id: 'nascentes', label: 'Nascentes', icon: '💧',

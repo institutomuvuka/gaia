@@ -312,6 +312,10 @@ function showFeaturePanel(feature) {
   if (p.areaHa) rows.push(['Área', `${Number(p.areaHa).toLocaleString('pt-BR', { maximumFractionDigits: 0 })} ha`]);
   if (p.peoples) rows.push(['Povos', p.peoples]);
   if (p.phase) rows.push(['Estágio', p.phase]);
+  if (p.municipality) rows.push(['Município', p.municipality]);
+  if (p.families) rows.push(['Famílias', `${p.families} ${p.families === 1 ? 'família' : 'famílias'}`]);
+  if (p.titulationDate) rows.push(['Titulado em', p.titulationDate]);
+  if (p.process) rows.push(['Processo', `<code style="font-size: 11px;">${p.process}</code>`]);
   if (p.occurrences) rows.push(['Ocorrências', p.occurrences]);
   if (p.iucnThreats) {
     let threats = p.iucnThreats;
