@@ -12,9 +12,16 @@ export async function register(map){
   const data=await loadData();
   if(!map.getSource(SOURCE_ID))map.addSource(SOURCE_ID,{type:'geojson',data});
   const visibility=LAYER.visibleByDefault?'visible':'none';
-  if(!map.getLayer(FILL_LAYER_ID))map.addLayer({id:FILL_LAYER_ID,type:'fill',source:SOURCE_ID,paint:{'fill-color':LAYER.color,'fill-opacity':['match',['get','phase'],'Regularizada',0.40,'Homologada',0.35,'Declarada',0.28,'Delimitada',0.22,'Encaminhada RI',0.18,'Em Estudo',0.14,0.30]},layout:{visibility}});
-  if(!map.getLayer(HALO_LAYER_ID))map.addLayer({id:HALO_LAYER_ID,type:'line',source:SOURCE_ID,paint:{'line-color':'#FFFFFF','line-width':4,'line-opacity':0.7},layout:{visibility}});
-  if(!map.getLayer(LINE_LAYER_ID))map.addLayer({id:LINE_LAYER_ID,type:'line',source:SOURCE_ID,paint:{'line-color':'#5A3818','line-width':1.8,'line-opacity':0.95},layout:{visibility}});
+  if(!map.getLayer(FILL_LAYER_ID))map.addLayer({id:FILL_LAYER_ID,type:'fill',source:SOURCE_ID,
+    paint:{'fill-color':LAYER.color,
+      'fill-opacity':['match',['get','phase'],
+        'Regularizada',0.55,'Homologada',0.50,'Declarada',0.42,
+        'Delimitada',0.36,'Encaminhada RI',0.32,'Em Estudo',0.28,0.42]},
+    layout:{visibility}});
+  if(!map.getLayer(HALO_LAYER_ID))map.addLayer({id:HALO_LAYER_ID,type:'line',source:SOURCE_ID,
+    paint:{'line-color':'#FFFFFF','line-width':2.5,'line-opacity':0.6},layout:{visibility}});
+  if(!map.getLayer(LINE_LAYER_ID))map.addLayer({id:LINE_LAYER_ID,type:'line',source:SOURCE_ID,
+    paint:{'line-color':'#3D2410','line-width':1.5,'line-opacity':1},layout:{visibility}});
 }
 export function show(map){[FILL_LAYER_ID,HALO_LAYER_ID,LINE_LAYER_ID].forEach(id=>{if(map.getLayer(id))map.setLayoutProperty(id,'visibility','visible');});}
 export function hide(map){[FILL_LAYER_ID,HALO_LAYER_ID,LINE_LAYER_ID].forEach(id=>{if(map.getLayer(id))map.setLayoutProperty(id,'visibility','none');});}
