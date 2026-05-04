@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="GAIA — mapa interativo da conservação e restauração brasileira." />
   <title>Mapa — GAIA</title>
   <link rel="stylesheet" href="../../styles/tokens.css" />
   <link rel="stylesheet" href="../../styles/base.css" />
@@ -45,9 +44,7 @@
       </section>
 
       <section class="gaia-map-sidebar__callout">
-        <p>
-          Camadas marcadas como <strong>agregadas</strong> têm geometria reduzida a célula de 1 km. Restritas dependem de verificação de custódia.
-        </p>
+        <p>Camadas marcadas como <strong>agregadas</strong> têm geometria reduzida. Restritas dependem de verificação de custódia.</p>
         <a href="../../policies/dados-sensiveis.md" target="_blank" rel="noopener">Ler a política completa →</a>
       </section>
     </aside>
@@ -55,14 +52,17 @@
     <div class="gaia-map-canvas">
       <div id="map" role="application" aria-label="Mapa interativo do GAIA"></div>
 
+      <!-- Basemap toggle -->
+      <div class="gaia-basemap-toggle" id="basemap-toggle"></div>
+
       <!-- Legenda IUCN -->
       <div class="gaia-legend" id="legend">
         <div class="gaia-legend__title">Categoria IUCN</div>
-        <div class="gaia-legend__row"><span class="gaia-legend__swatch" style="background:#B71C1C30; border-color:#B71C1C"></span> CR — Criticamente em Perigo</div>
-        <div class="gaia-legend__row"><span class="gaia-legend__swatch" style="background:#E6510030; border-color:#E65100"></span> EN — Em Perigo</div>
-        <div class="gaia-legend__row"><span class="gaia-legend__swatch" style="background:#F9A82530; border-color:#F9A825"></span> VU — Vulnerável</div>
-        <div class="gaia-legend__row"><span class="gaia-legend__swatch" style="background:#9E9D2430; border-color:#9E9D24"></span> NT — Quase Ameaçada</div>
-        <div class="gaia-legend__row"><span class="gaia-legend__swatch" style="background:#388E3C30; border-color:#388E3C"></span> LC — Pouco Preocupante</div>
+        <div class="gaia-legend__row"><span class="gaia-legend__swatch" style="background:#B71C1C40; border-color:#B71C1C"></span> CR — Criticamente em Perigo</div>
+        <div class="gaia-legend__row"><span class="gaia-legend__swatch" style="background:#E6510040; border-color:#E65100"></span> EN — Em Perigo</div>
+        <div class="gaia-legend__row"><span class="gaia-legend__swatch" style="background:#F9A82540; border-color:#F9A825"></span> VU — Vulnerável</div>
+        <div class="gaia-legend__row"><span class="gaia-legend__swatch" style="background:#9E9D2440; border-color:#9E9D24"></span> NT — Quase Ameaçada</div>
+        <div class="gaia-legend__row"><span class="gaia-legend__swatch" style="background:#388E3C40; border-color:#388E3C"></span> LC — Pouco Preocupante</div>
       </div>
 
       <aside class="gaia-feature-panel" id="feature-panel" aria-live="polite">
@@ -77,7 +77,6 @@
       </aside>
     </div>
   </main>
-
   <script type="module" src="./map.js"></script>
 </body>
 </html>
