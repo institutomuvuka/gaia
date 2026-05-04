@@ -43,23 +43,30 @@ function setBasemap(map, basemapId) {
   currentBasemap = basemapId;
   const bm = BASEMAPS[basemapId];
   if (!bm) return;
-  // Salva todas as data layers antes de trocar style (style change limpa tudo)
-  const layers = Object.values(LAYERS);
-  const visibilities = {};
-  layers.forEach(l => {
-    if (l.module && map.getLayer(`lyr-${l.id}-fill`)) {
-      visibilities[l.id] = map.getLayoutProperty(`lyr-${l.id}-fill`,'visibility');
+  // Captura estado atual dos toggles (mais confiável que getLayoutProperty antes do setStyle)
+  const checkedLayers = new Set();
+  document.querySelectorAll('.gaia-layer-group__check').forEach(cb => {
+    if (cb.checked) {
+      const id = cb.id.replace('toggle-','');
+      checkedLayers.add(id);
     }
   });
+  // limpa source caches: setStyle limpa tudo; precisamos reanexar do zero
+  layerModules.forEach((mod, id) => { if (mod && mod.__hooked) mod.__hooked = false; });
   map.setStyle(bm.style);
   map.once('style.load', async () => {
-    for (const l of layers) {
+    for (const l of Object.values(LAYERS)) {
       if (!l.module) continue;
       const mod = await loadLayerModule(l);
       if (!mod) continue;
-      try { await mod.register(map); if (mod.onClick) mod.onClick(map, showFeaturePanel); } catch(e){}
-      // restore visibility
-      if (visibilities[l.id] === 'visible') mod.show(map);
+      try {
+        await mod.register(map);
+        if (mod.onClick && !mod.__hooked) { mod.onClick(map, showFeaturePanel); mod.__hooked = true; }
+      } catch(e){ console.error('reregister', l.id, e); }
+      // visibility seguindo estado UI
+      if (checkedLayers.has(l.id)) mod.show(map); else mod.hide(map);
+      // se modo era pins, reaplica
+      if (layerMode.get(l.id) === 'pins') setLayerMode(map, l.id, 'pins');
     }
   });
   // Update active
