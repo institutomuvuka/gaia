@@ -66,6 +66,16 @@ export const LAYERS = Object.freeze({
     module: '../layers/threatened-species.js',
     nameField: 'name', count: 845,
   },
+  'biomas': {
+    id: 'biomas', label: 'Biomas brasileiros', icon: '🌎',
+    description: '6 biomas continentais (Amazônia, Cerrado, Mata Atlântica, Caatinga, Pantanal, Pampa) — IBGE 1:250.000 (2019). Camada de contexto, renderizada abaixo das demais.',
+    source: { origin: 'IBGE — Biomas (1:250.000)',
+      url: 'https://www.ibge.gov.br/geociencias/informacoes-ambientais/vegetacao/15842-biomas.html',
+      reference: 'lm_bioma_250 — 2019', lastFetched: '2026-05-05', ingestionStatus: 'official' },
+    sensitivity: 'public', color: '#3A8C5A', visibleByDefault: false,
+    module: '../layers/biomas.js',
+    nameField: 'name', count: 6,
+  },
   'mapbiomas-cover': {
     id: 'mapbiomas-cover', label: 'Cobertura e uso da terra', icon: '🌎',
     description: 'Coleção mais recente do MapBiomas (Brasil).',

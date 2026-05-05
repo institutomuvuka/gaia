@@ -15,6 +15,7 @@ Inventário das fontes oficiais que alimentam GAIA, com status de ingestão. Tod
 | Bacias hidrográficas | ANA | https://metadados.snirh.gov.br/ | Shapefile | ⏳ pendente | Ottobacias níveis 1–7. |
 | Hidrografia | IBGE / ANA | https://www.ibge.gov.br/geociencias/ | Shapefile | ⏳ pendente | Rios, riachos, corpos d'água. |
 | Nascentes | ANA + dados primários | https://www.ana.gov.br/ | Mistura: oficial + colaborativo | ⏳ pendente | Camada **agregada** por padrão. Ver política de dados sensíveis. |
+| Biomas brasileiros | IBGE — Biomas (1:250.000) | https://www.ibge.gov.br/geociencias/informacoes-ambientais/vegetacao/15842-biomas.html | Shapefile → GeoJSON | ✅ oficial | 6 biomas continentais (Amazônia, Cerrado, Mata Atlântica, Caatinga, Pantanal, Pampa). Simplificado (~5 km), 250 KB. Renderizado como camada de contexto, abaixo das demais. |
 | Cobertura e uso da terra | MapBiomas | https://mapbiomas.org/colecoes-mapbiomas | GeoTIFF + WMS | ⏳ pendente | API requer cadastro. Avaliar uso de WMS público vs. ingest local. |
 | Alertas de desmatamento | Global Forest Watch | https://www.globalforestwatch.org/ | API | ⏳ pendente | Integração com a API de alertas (GLAD/RADD). |
 | Espécies ameaçadas | IUCN Spatial Data + Red List API v4 + GBIF | https://www.iucnredlist.org/ | Shapefile + REST | ✅ oficial (parcial) | 25 espécies-bandeira. **15 com polígonos oficiais IUCN** (
